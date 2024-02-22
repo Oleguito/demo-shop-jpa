@@ -27,5 +27,9 @@ public class CategoryService {
     public void removeCategory(Category categoryToRemove) {
         categoryRepository.delete(categoryToRemove);
     }
+    
+    public Category findByTitle(String categoryTitle) {
+        return categoryRepository.findByTitle(categoryTitle);
+    }
 }
 

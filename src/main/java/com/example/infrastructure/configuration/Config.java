@@ -1,7 +1,7 @@
 package com.example.infrastructure.configuration;
 
 import com.example.domain.entity.Category;
-import com.example.presentation.category.dto.commands.CategoryCreateCommand;
+import com.example.presentation.category.dto.commands.CreateCategoryCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -12,13 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
     
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-    
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap <CategoryCreateCommand, Category>() {
+        modelMapper.addMappings(new PropertyMap <CreateCategoryCommand, Category>() {
             protected void configure() {
                 map().setTitle(source.getTitle());
             }

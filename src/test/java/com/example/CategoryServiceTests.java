@@ -40,6 +40,15 @@ public class CategoryServiceTests {
     }
     
     @Test
+    void findCategoryByTitle() {
+        Category categoryToAdd = FOODS;
+        categoryService.addCategory(categoryToAdd);
+        assertTrue("",
+                categoryService.findByTitle(FOODS.getTitle())
+                .equals(categoryToAdd));
+    }
+    
+    @Test
     void removeCategory() {
         Category categoryToRemove = SERVICES;
         categoryService.addCategory(categoryToRemove);
