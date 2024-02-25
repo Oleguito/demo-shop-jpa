@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Data
 public class CreateCategoryCommand {
+    
     @Setter
     String title;
 

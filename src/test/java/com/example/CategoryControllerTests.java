@@ -1,7 +1,6 @@
 package com.example;
 import com.example.presentation.category.CategoryController;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.example.settings.Settings.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @Rollback
 public class CategoryControllerTests {
+    
     @Autowired
     private CategoryController categoryController;
     private MockMvc mockMvc;
@@ -37,7 +38,7 @@ public class CategoryControllerTests {
 
     @Test
     void returnListOfCategoriesREST() throws Exception {
-        mockMvc.perform(get("/categories")).andExpectAll(
+        mockMvc.perform(get(CATEGORIES)).andExpectAll(
                 jsonPath("$", hasSize(greaterThanOrEqualTo(0)))
         );
     }
@@ -48,7 +49,7 @@ public class CategoryControllerTests {
         var categoryCommand = createCategoryCommand(foods);
         postCategoryCommand(categoryCommand);
         
-        mockMvc.perform(get("/categories")).andExpectAll(
+        mockMvc.perform(get(CATEGORIES)).andExpectAll(
                 jsonPath("$[?(@.title == 'services')]").exists()
         );
     }
@@ -59,7 +60,7 @@ public class CategoryControllerTests {
         var categoryCommand = createCategoryCommand(foods);
         postCategoryCommand(categoryCommand);
         
-        mockMvc.perform(get("/categories/" + foods)).andExpectAll(
+        mockMvc.perform(get( CATEGORIES +"/" + foods)).andExpectAll(
                 status().isOk(),
                 jsonPath("$[?(@.title == 'foods')]").exists()
         );
@@ -71,16 +72,32 @@ public class CategoryControllerTests {
         CreateCategoryCommand categoryCommand = createCategoryCommand(magazines);
         postCategoryCommand(categoryCommand);
         
-        mockMvc.perform(delete("/categories/delete/" + magazines));
+        mockMvc.perform(delete( CATEGORIES +"/delete/" + magazines));
         
-        mockMvc.perform(get("/categories/" + magazines)).andExpectAll(
+        mockMvc.perform(get(CATEGORIES +"/" + magazines)).andExpectAll(
                 jsonPath("$[?(@.title == 'magazines')]").doesNotExist()
         );
     }
     
-    private void postCategoryCommand(CreateCategoryCommand categoryCommand) throws Exception {
+    @Test
+    void addProductToCategory() throws Exception {
+        var command = createCategoryCommand("magazines");
+        postCategoryCommand(command);
+        
+        String body = jackson.writeValueAsString(command);
+        mockMvc.perform(post(CATEGORIES + ADD_PRODUCT + "/playboy")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body)
+        ).andExpectAll(
+                status().isOk()
+                // jsonPath("$.title", equalTo("playboy"))
+        );
+    }
+    
+    private ResultActions postCategoryCommand(CreateCategoryCommand categoryCommand) throws Exception {
         String body = jackson.writeValueAsString(categoryCommand);
-        mockMvc.perform(post("/categories/add/")
+        
+        return mockMvc.perform(post( CATEGORIES + ADD_CATEGORY)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         );

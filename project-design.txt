@@ -1,0 +1,14 @@
+список категорий
+GET /categories
+
+добавить категорию
+POST /categories/add
+{
+    "name" : "foods"
+}
+
+добавить продукт в категорию
+POST /categories/foods/add
+{
+    "name" : "bread"
+}

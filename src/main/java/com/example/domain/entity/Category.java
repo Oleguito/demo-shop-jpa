@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
+import java.util.Set;
+
+import com.example.settings.Settings;
 
 @Getter
 @Setter
@@ -11,7 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories")
+@Table(name = Settings.CATEGORIES_TABLE_NAME)
 public class Category {
 
     @Id

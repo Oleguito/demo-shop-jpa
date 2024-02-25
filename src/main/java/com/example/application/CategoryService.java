@@ -2,6 +2,8 @@ package com.example.application;
 
 import com.example.domain.entity.Category;
 import com.example.infrastructure.repository.CategoryRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
