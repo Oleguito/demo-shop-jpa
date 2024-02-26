@@ -3,14 +3,16 @@ package com.example.application;
 import com.example.domain.entity.User;
 import com.example.infrastructure.repository.UserRepository;
 import com.example.presentation.user.dto.queries.UserQuery;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     
     public User addUser(User user) {
         return userRepository.save(user);

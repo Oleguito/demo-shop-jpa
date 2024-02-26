@@ -14,14 +14,16 @@ POST /categories/foods/add
 }
 
 /categories
-/categories/add
-/categories/add-product
-/categories/delete
+/categories/add/foods
+/categories/add-product/bread {Product JSON with Category field}
+/categories/delete/foods
 /categories/update/foods
+
 /users
-/users/add
-/users/delete
+/users/add/oleguito
+/users/delete/oleguito
 /users/update/oleguito
-/users/oleguito/purchase-history
-/users/oleguito/purchase
-/users/oleguito/products-bin
+
+/purchase?username=oleguito
+/purchase/history?username=oleguito
+/purchase/products-bin?username=oleguito
