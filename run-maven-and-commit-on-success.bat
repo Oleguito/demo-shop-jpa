@@ -6,5 +6,5 @@ call mvnw test
 
 IF %ERRORLEVEL% EQU 0 (
    git add .
-   git commit -m "тесты прошли "
+   git commit -m "all tests passed %DATE% %TIME%"
 )
