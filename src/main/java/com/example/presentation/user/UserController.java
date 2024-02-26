@@ -7,11 +7,10 @@ import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.example.settings.Settings;
+
+import java.util.List;
 
 import static com.example.settings.Settings.*;
 
@@ -23,6 +22,11 @@ public class UserController {
     private UserService userService;
     
     private UserMapper userMapper;
+    
+    @GetMapping
+    public List <UserQuery> getAllUsers() {
+        return userMapper.toListUserQuery(userService.findAll());
+    }
     
     @PostMapping("/add")
     public UserQuery postAUser(@RequestBody CreateUserCommand userCommand) {

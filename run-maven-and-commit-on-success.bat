@@ -1,5 +1,4 @@
 @echo off
-echo FUCK YOU
 set JAVA_HOME=C:\JDK17\jdk-17.0.2+8
 
 call mvnw test

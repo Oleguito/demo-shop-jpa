@@ -35,6 +35,13 @@ public class UserControllerTests {
     }
     
     @Test
+    void listAllUsers() throws Exception {
+        mockMvc.perform(get(USERS_MAPPING)).andExpectAll(
+                status().isOk()
+        );
+    }
+    
+    @Test
     void addUser() throws Exception {
         final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = CreateUserCommand.builder()
