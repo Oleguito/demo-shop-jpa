@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,7 @@ public class ProductController {
     private ModelMapper modelMapper;
     
     @GetMapping("/all")
-    public List <ProductQuery> getAllProducts() {
+    public List <ProductQuery> getAllProductsREST() {
         return productService.findAll().stream().map(
                 product ->
                 modelMapper.map(product, ProductQuery.class)
@@ -30,7 +29,7 @@ public class ProductController {
     
     
     @PostMapping("/add")
-    public ProductQuery createProduct(@RequestBody CreateProductCommand productCommand) {
+    public ProductQuery createProductREST(@RequestBody CreateProductCommand productCommand) {
         Product productFromCommand =
                 modelMapper.map(productCommand, Product.class);
         Product product = productService.create(productFromCommand);

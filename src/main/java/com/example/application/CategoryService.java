@@ -1,6 +1,7 @@
 package com.example.application;
 
 import com.example.domain.entity.Category;
+import com.example.domain.entity.Product;
 import com.example.infrastructure.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,9 @@ public class CategoryService {
     public Category findByTitle(String categoryTitle) {
         return categoryRepository.findByTitle(categoryTitle);
     }
+    
+    // public Product addProduct(Product product) {
+    //     return null;
+    // }
 }
 

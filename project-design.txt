@@ -12,3 +12,16 @@ POST /categories/foods/add
 {
     "name" : "bread"
 }
+
+/categories
+/categories/add
+/categories/add-product
+/categories/delete
+/categories/update/foods
+/users
+/users/add
+/users/delete
+/users/update/oleguito
+/users/oleguito/purchase-history
+/users/oleguito/purchase
+/users/oleguito/products-bin

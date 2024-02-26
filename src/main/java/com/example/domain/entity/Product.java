@@ -4,13 +4,17 @@ import com.example.settings.Settings;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
+import static com.example.settings.Settings.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Getter
 @Setter
-@Table(name = Settings.PRODUCTS_TABLE_NAME)
+@Table(name = PRODUCTS_TABLE_NAME)
 public class Product {
     
     @Id
@@ -18,4 +22,7 @@ public class Product {
     private Long id;
     
     private String title;
+    
+    @ManyToOne
+    private Category category;
 }

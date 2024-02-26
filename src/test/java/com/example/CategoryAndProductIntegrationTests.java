@@ -37,19 +37,6 @@ public class CategoryAndProductIntegrationTests {
         this.productMockMvc = 
                 MockMvcBuilders.standaloneSetup(productController).build(); 
     }
-    
-    // @Test // TODO
-    // void listProductsWithinCategory() throws Exception {
-    //     postEntityWithMockMvc(categoryMockMvc,
-    //             createEntityCommandByTitle("magazines", CreateCategoryCommand.class),
-    //             CATEGORIES_HANDLE + "/add"
-    //     );
-    //     postEntityWithMockMvc(productMockMvc,
-    //             createEntityCommandByTitle("playboy", CreateProductCommand.class),
-    //             "/products/add"
-    //     );
-    //
-    // }
 }
 
 

@@ -1,11 +1,15 @@
 package com.example.presentation.category;
 
 import com.example.application.CategoryService;
+import com.example.application.mappers.CategoryMapper;
+import com.example.application.mappers.ProductMapper;
 import com.example.domain.entity.Category;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
 import com.example.presentation.category.dto.queries.CategoryQuery;
+import com.example.presentation.product.ProductController;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.product.dto.query.ProductQuery;
+import com.example.settings.Settings;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +25,12 @@ import static com.example.settings.Settings.*;
 public class CategoryController {
     
     private final CategoryService categoryService;
+    private final ProductController productController;
     private final ModelMapper modelMapper;
+    private final CategoryMapper categoryMapper;
+    private final ProductMapper productMapper;
+    
+    private final String CATEGORY_TITLE_VAR = "categoryTitle";
     
     @GetMapping
     public List <CategoryQuery> getAllCategories() {
@@ -31,7 +40,7 @@ public class CategoryController {
         ).collect(Collectors.toList());
     }
     
-    @GetMapping("/{categoryTitle}")
+    @GetMapping("/{" + CATEGORY_TITLE_VAR + "}")
     public CategoryQuery getCategoryByName(@PathVariable String categoryTitle) {
         var category =  categoryService.findByTitle(categoryTitle);
         return category == null
@@ -40,7 +49,7 @@ public class CategoryController {
                 CategoryQuery.class);
     }
     
-    @PostMapping("/add")
+    @PostMapping(ADD_CATEGORY)
     public CategoryQuery addCategory(@RequestBody CreateCategoryCommand command) {
         Category fromCommand =
                 modelMapper.map(command, Category.class);
@@ -49,15 +58,16 @@ public class CategoryController {
         return modelMapper.map(category, CategoryQuery.class);
     }
     
-    @PostMapping("/add-product/{categoryTitle}")
+    @PostMapping(ADD_PRODUCT)
     public ProductQuery addProductToCategory(
-            @PathVariable String categoryTitle,
-            @RequestBody CreateProductCommand categoryCommand
+            @RequestBody CreateProductCommand productCommand
     ) {
-        return new ProductQuery();
+        Category category = categoryService.findByTitle(
+                productCommand.getCategory().getTitle());
+        return productController.createProductREST(productCommand);
     }
-    
-    @DeleteMapping("/delete/{categoryTitle}")
+
+    @DeleteMapping(DELETE_CATEGORY + "/{" + CATEGORY_TITLE_VAR + "}")
     public void deleteCategoryByTitle(@PathVariable String categoryTitle) {
         categoryService.removeCategory(
                 categoryService.findByTitle(categoryTitle));

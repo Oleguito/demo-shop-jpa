@@ -1,6 +1,8 @@
 package com.example;
+import com.example.domain.entity.Category;
 import com.example.presentation.category.CategoryController;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
+import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +28,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CategoryControllerTests {
     
     @Autowired
-    private CategoryController categoryController;
+    private  CategoryController categoryController;
+    
     private MockMvc mockMvc;
+    
     @Autowired
     private ObjectMapper jackson;
     
@@ -45,57 +49,71 @@ public class CategoryControllerTests {
 
     @Test
     void addCategoryREST() throws Exception {
-        String foods = "services";
-        var categoryCommand = createCategoryCommand(foods);
+        final String categoryTitle = "services";
+        final var categoryCommand = createCategoryCommand(categoryTitle);
         postCategoryCommand(categoryCommand);
         
         mockMvc.perform(get(CATEGORIES)).andExpectAll(
-                jsonPath("$[?(@.title == 'services')]").exists()
+                jsonPath("$[?(@.title == '" + categoryTitle + "')]").exists()
         );
     }
     
     @Test
     void getOneCategoryREST() throws Exception {
-        String foods = "foods";
-        var categoryCommand = createCategoryCommand(foods);
+        final String foods = "foods";
+        final var categoryCommand = createCategoryCommand(foods);
         postCategoryCommand(categoryCommand);
         
-        mockMvc.perform(get( CATEGORIES +"/" + foods)).andExpectAll(
+        mockMvc.perform(get( CATEGORIES + "/" + foods)).andExpectAll(
                 status().isOk(),
-                jsonPath("$[?(@.title == 'foods')]").exists()
+                jsonPath("$[?(@.title == '" + foods + "')]").exists()
         );
     }
     
     @Test
-    void deleteCategoryRest() throws Exception {
-        String magazines = "magazines";
+    void deleteCategoryREST() throws Exception {
+       final String magazines = "magazines";
         CreateCategoryCommand categoryCommand = createCategoryCommand(magazines);
         postCategoryCommand(categoryCommand);
         
         mockMvc.perform(delete( CATEGORIES +"/delete/" + magazines));
         
         mockMvc.perform(get(CATEGORIES +"/" + magazines)).andExpectAll(
-                jsonPath("$[?(@.title == 'magazines')]").doesNotExist()
+                jsonPath("$[?(@.title == '" + magazines + "')]").doesNotExist()
         );
     }
     
     @Test
-    void addProductToCategory() throws Exception {
-        var command = createCategoryCommand("magazines");
-        postCategoryCommand(command);
+    void addProductToCategoryREST() throws Exception {
         
-        String body = jackson.writeValueAsString(command);
-        mockMvc.perform(post(CATEGORIES + ADD_PRODUCT + "/playboy")
+        final var magazines = "magazines";
+        final var playboy = "playboy";
+        
+        final var categoryCommand = createCategoryCommand(magazines);
+        postCategoryCommand(categoryCommand);
+        
+        final var categoryToAvoidMapping = new Category();
+        categoryToAvoidMapping.setTitle(magazines);
+        
+        final var productCommand
+                = CreateProductCommand.builder()
+                .category(categoryToAvoidMapping)
+                .title(playboy)
+                .build();
+                
+        final String body = jackson.writeValueAsString(productCommand);
+        mockMvc.perform(post(CATEGORIES + ADD_PRODUCT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         ).andExpectAll(
-                status().isOk()
-                // jsonPath("$.title", equalTo("playboy"))
+                status().isOk(),
+                jsonPath("$.title", equalTo(playboy)),
+                jsonPath("$.category.title", equalTo(magazines))
         );
     }
     
     private ResultActions postCategoryCommand(CreateCategoryCommand categoryCommand) throws Exception {
-        String body = jackson.writeValueAsString(categoryCommand);
+        final String body = jackson.writeValueAsString(categoryCommand);
         
         return mockMvc.perform(post( CATEGORIES + ADD_CATEGORY)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -104,7 +122,7 @@ public class CategoryControllerTests {
     }
     
     private static CreateCategoryCommand createCategoryCommand(String categoryTitle) {
-        var categoryCommand = new CreateCategoryCommand();
+        final var categoryCommand = new CreateCategoryCommand();
         categoryCommand.setTitle(categoryTitle);
         return categoryCommand;
     }

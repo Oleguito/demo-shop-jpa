@@ -15,5 +15,12 @@ public class Settings {
             = "/add-product";
     
     public static final String ADD_CATEGORY
-            = "/add/";
+            = "/add";
+    
+    public static final String ADD_CATEGORY_SLASH
+            = ADD_CATEGORY + "/";
+    
+    public static final String DELETE_CATEGORY
+            = "/delete";
+    public static final String USERS_MAPPING = "/users";
 }
