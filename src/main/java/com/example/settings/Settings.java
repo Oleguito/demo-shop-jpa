@@ -22,5 +22,10 @@ public class Settings {
     
     public static final String DELETE_CATEGORY
             = "/delete";
-    public static final String USERS_MAPPING = "/users";
+    
+    public static final String USERS_MAPPING
+            = "/users";
+    
+    public static final String ADD
+            = "/add";
 }

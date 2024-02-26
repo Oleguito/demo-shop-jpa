@@ -10,10 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import com.example.settings.Settings;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
+import static com.example.settings.Settings.*;
 
 @SpringBootTest(classes = ShopApplication.class)
 public class UserControllerTests {
@@ -35,11 +37,12 @@ public class UserControllerTests {
     @Test
     void addUser() throws Exception {
         final String OLEGUITO = "oleguito";
-        CreateUserCommand userCommand = new CreateUserCommand();
-                userCommand.setLogin(OLEGUITO);
+        CreateUserCommand userCommand = CreateUserCommand.builder()
+                .login(OLEGUITO)
+                .build();
                 
         final String body = jackson.writeValueAsString(userCommand);
-        mockMvc.perform(post("/users/add")
+        mockMvc.perform(post(USERS_MAPPING + ADD)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         ).andExpectAll(
