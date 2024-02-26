@@ -30,11 +30,11 @@ public class UserController {
     
     @PostMapping("/add")
     public UserQuery postAUser(@RequestBody CreateUserCommand userCommand) {
-        // User user = userMapper.toUser(userCommand);
-        // user = userService.addUser(user);
-        // UserQuery userQuery = userMapper.toUserQuery(user);
-        UserQuery userQuery = new UserQuery();
-        userQuery.setLogin("oleguito");
+        User user = userMapper.toUser(userCommand);
+        user = userService.addUser(user);
+        UserQuery userQuery = userMapper.toUserQuery(user);
+        // UserQuery userQuery = new UserQuery();
+        // userQuery.setLogin("oleguito");
         return userQuery;
     }
 
