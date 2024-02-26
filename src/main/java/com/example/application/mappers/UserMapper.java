@@ -7,8 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(suppressTimestampInGenerated = true,
-        unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE)
+@Mapper
 public interface UserMapper {
     
     User toUser(CreateUserCommand createUserCommand);
