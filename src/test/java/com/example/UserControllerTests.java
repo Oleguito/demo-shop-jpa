@@ -93,6 +93,11 @@ public class UserControllerTests {
             .andExpectAll(
             status().isOk()
         );
+        mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
+            .andExpectAll(
+            status().isOk(),
+            jsonPath("$.login").doesNotExist()
+        );
     }
     
     private static CreateUserCommand getCreateUserCommand(String login) {
