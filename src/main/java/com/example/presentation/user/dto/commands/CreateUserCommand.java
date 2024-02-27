@@ -6,6 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Setter
+@Getter
 @NoArgsConstructor
 public class CreateUserCommand {
     

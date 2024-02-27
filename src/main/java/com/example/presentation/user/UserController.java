@@ -28,11 +28,24 @@ public class UserController {
         return userMapper.toListUserQuery(userService.findAll());
     }
     
+    @GetMapping("/{id}")
+    public UserQuery getUserById(@PathVariable Long id) {
+        final var user = userService.getUserById(id);
+        return user.isEmpty()
+                ? new UserQuery()
+                : userMapper.toUserQuery(user.get());
+    }
+    
     @PostMapping("/add")
     public UserQuery postAUser(@RequestBody CreateUserCommand userCommand) {
-        User user = userMapper.toUser(userCommand);
-        user = userService.addUser(user);
-        return userMapper.toUserQuery(user);
+        User fromCommand = userMapper.toUser(userCommand);
+        User user = userService.addUser(fromCommand);
+        UserQuery userQuery = userMapper.toUserQuery(user);
+        
+        System.out.println(fromCommand);
+        System.out.println(user);
+        System.out.println(userQuery);
+        return userQuery;
     }
 
 }

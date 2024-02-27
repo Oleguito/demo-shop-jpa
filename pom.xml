@@ -96,34 +96,33 @@
                     <target>17</target> <!-- depending on your project -->
                     <annotationProcessorPaths>
                         <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
                         <!-- other annotation processors -->
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
                     </annotationProcessorPaths>
-                    <compilerArgs>
-                        <arg>
-                            -Amapstruct.defaultComponentModel=spring
-                        </arg>
-                        <arg>
-                            -Amapstruct.suppressGeneratorTimestamp=false
-                        </arg>
-                        <arg>
-                            -Amapstruct.unmappedSourcePolicy=WARN
-                        </arg>
-                    </compilerArgs>
+<!--                    <compilerArgs>-->
+<!--                        <arg>-->
+<!--                            -Amapstruct.defaultComponentModel=spring-->
+<!--                        </arg>-->
+<!--&lt;!&ndash;                        <arg>&ndash;&gt;-->
+<!--&lt;!&ndash;                            -Amapstruct.unmappedSourcePolicy=IGNORE&ndash;&gt;-->
+<!--&lt;!&ndash;                        </arg>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <arg>&ndash;&gt;-->
+<!--&lt;!&ndash;                            -Amapstruct.verbose=true&ndash;&gt;-->
+<!--&lt;!&ndash;                        </arg>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <arg>&ndash;&gt;-->
+<!--&lt;!&ndash;                            -Amapstruct.suppressGeneratorTimestamp=true&ndash;&gt;-->
+<!--&lt;!&ndash;                        </arg>&ndash;&gt;-->
+<!--                    </compilerArgs>-->
                 </configuration>
             </plugin>
-
-
-
-
         </plugins>
     </build>
 

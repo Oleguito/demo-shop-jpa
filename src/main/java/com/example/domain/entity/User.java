@@ -1,8 +1,7 @@
 package com.example.domain.entity;
 
 import com.example.domain.valueobject.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Builder
@@ -11,6 +10,13 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+@Getter
+@Setter
+public class User {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    
     String login;
 }

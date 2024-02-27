@@ -61,7 +61,8 @@ public class CategoryControllerTests {
     @Test
     void getOneCategoryREST() throws Exception {
         final String foods = "foods";
-        final var categoryCommand = createCategoryCommand(foods);
+        final var categoryCommand
+                = createCategoryCommand(foods);
         postCategoryCommand(categoryCommand);
         
         mockMvc.perform(get( CATEGORIES + "/" + foods)).andExpectAll(
