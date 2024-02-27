@@ -19,8 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 public class TestUtils {
 
-    private final static ObjectMapper jackson = new ObjectMapper();
-    
     public static ResultActions postSomething(
             MockMvc mockMvc,
             String body,
