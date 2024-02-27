@@ -102,15 +102,16 @@ public class UserControllerTests {
     
     @Test
     void updateAUser() throws Exception {
-        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
-        String body = jackson.writeValueAsString(userCommand);
-        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        // CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
+        // String body = jackson.writeValueAsString(userCommand);
+        // ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        final var resultActions = postAUser(OLEGUITO);
         UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
         
         UpdateUserCommand updateUserCommand = UpdateUserCommand.builder()
                 .login("tenzuro")
                 .build();
-        body = jackson.writeValueAsString(updateUserCommand);
+        final var body = jackson.writeValueAsString(updateUserCommand);
         mockMvc.perform(put(USERS_MAPPING + "/" + userQuery.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body)
@@ -130,8 +131,6 @@ public class UserControllerTests {
     private ResultActions postAUser(String login) throws JsonProcessingException {
         CreateUserCommand userCommand = getCreateUserCommand(login);
         final String body = jackson.writeValueAsString(userCommand);
-        // ResultActions resultActions = postSomething(mockMvc, body, );
-        // return resultActions;
         return postSomething(mockMvc, body, USERS_MAPPING + ADD);
     }
     
