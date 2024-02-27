@@ -102,9 +102,6 @@ public class UserControllerTests {
     
     @Test
     void updateAUser() throws Exception {
-        // CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
-        // String body = jackson.writeValueAsString(userCommand);
-        // ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
         final var resultActions = postAUser(OLEGUITO);
         UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
         
