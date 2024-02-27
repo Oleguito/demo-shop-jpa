@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 
+import static com.example.testutil.TestUtils.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
@@ -57,8 +58,8 @@ public class UserControllerTests {
         final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
-        ResultActions resultActions = TestUtils.postSomething(mockMvc, body, USERS_MAPPING + ADD);
-        UserQuery userQuery = TestUtils.userQueryfromPostResult(resultActions, jackson);
+        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
 
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
             .andExpectAll(
@@ -72,13 +73,9 @@ public class UserControllerTests {
     void addUser() throws Exception {
         final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
-
         final String body = jackson.writeValueAsString(userCommand);
-        // mockMvc.perform(post()
-        //         .contentType(MediaType.APPLICATION_JSON)
-        //         .content(body)
-        // )
-        TestUtils.postSomething(mockMvc, body, USERS_MAPPING + ADD)
+
+        postSomething(mockMvc, body, USERS_MAPPING + ADD)
                 .andExpectAll(
                 status().isOk(),
                 jsonPath("$.login", equalTo(OLEGUITO))
