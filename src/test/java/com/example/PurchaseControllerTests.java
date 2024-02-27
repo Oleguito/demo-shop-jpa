@@ -3,6 +3,7 @@ package com.example;
 import com.example.domain.entity.Purchase;
 import com.example.presentation.purchase.PurchaseController;
 import com.example.presentation.user.UserController;
+import com.example.testutil.TestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,7 @@ public class PurchaseControllerTests {
     @Test
     void listAllPurchasesByUser() throws Exception {
         
+        // TestUtils.postSomething(userMockMvc)
         purchaseMockMvc.perform(get("/purchases/1")).andExpectAll(
                 status().isOk(),
                 jsonPath("$", hasSize(greaterThanOrEqualTo(0)))

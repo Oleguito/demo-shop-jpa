@@ -2,6 +2,7 @@ package com.example.testutil;
 
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
 import com.example.presentation.product.dto.command.CreateProductCommand;
+import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -47,5 +48,11 @@ public class TestUtils {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public static CreateUserCommand getCreateUserCommand(String login) {
+        return CreateUserCommand.builder()
+                .login(login)
+                .build();
     }
 }
