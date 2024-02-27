@@ -11,8 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = ShopApplication.class)
@@ -45,7 +47,8 @@ public class PurchaseControllerTests {
     @Test
     void listAllPurchasesByUser() throws Exception {
         mockMvc.perform(get("/purchases?id=1")).andExpectAll(
-                status().isOk()
+                status().isOk(),
+                jsonPath("$", hasSize(greaterThanOrEqualTo(0)))
         );
     }
 }
