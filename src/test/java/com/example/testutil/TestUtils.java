@@ -39,19 +39,6 @@ public class TestUtils {
         }
     }
     
-    
-    public static Object
-    createEntityCommandByTitle(String title, Class<?> clazz)
-            throws IllegalAccessException,
-            InstantiationException,
-            NoSuchMethodException,
-            InvocationTargetException {
-        Object object = clazz.getConstructor().newInstance();
-        Method method = clazz.getMethod("setTitle", String.class);
-        method.invoke(object, title);
-        return object;
-    }
-    
     public static ResultActions postSomething(
             MockMvc mockMvc,
             String body,
