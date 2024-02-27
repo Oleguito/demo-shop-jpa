@@ -12,11 +12,7 @@ import lombok.*;
 @Table(name = "users")
 @Getter
 @Setter
-public class User {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class User extends BaseEntity {
     
     String login;
 }

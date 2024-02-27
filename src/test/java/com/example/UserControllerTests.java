@@ -60,7 +60,6 @@ public class UserControllerTests {
         final String body = jackson.writeValueAsString(userCommand);
         ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
         UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
-        
 
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
             .andExpectAll(
