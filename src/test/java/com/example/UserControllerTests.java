@@ -88,13 +88,4 @@ public class UserControllerTests {
                 .build();
     }
     
-    private final ResultActions postAUserByLogin(String login) throws Exception {
-        CreateUserCommand userCommand = getCreateUserCommand(login);
-
-        final String body = jackson.writeValueAsString(userCommand);
-        return mockMvc.perform(post(USERS_MAPPING + ADD)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body)
-        );
-    }
 }
