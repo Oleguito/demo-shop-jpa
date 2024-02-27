@@ -41,10 +41,10 @@ public class UserController {
         User fromCommand = userMapper.toUser(userCommand);
         User user = userService.addUser(fromCommand);
         UserQuery userQuery = userMapper.toUserQuery(user);
-        
-        System.out.println(fromCommand);
-        System.out.println(user);
-        System.out.println(userQuery);
+        //
+        // System.out.println(fromCommand);
+        // System.out.println(user);
+        // System.out.println(userQuery);
         return userQuery;
     }
 

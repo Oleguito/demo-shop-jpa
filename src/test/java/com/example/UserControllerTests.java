@@ -53,9 +53,7 @@ public class UserControllerTests {
     @Test
     void getAUserById() throws Exception {
         final String OLEGUITO = "oleguito";
-        CreateUserCommand userCommand = CreateUserCommand.builder()
-                .login(OLEGUITO)
-                .build();
+        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
 
         final String body = jackson.writeValueAsString(userCommand);
         MvcResult mvcResult = mockMvc.perform(post(USERS_MAPPING + ADD)
@@ -79,9 +77,7 @@ public class UserControllerTests {
     @Test
     void addUser() throws Exception {
         final String OLEGUITO = "oleguito";
-        CreateUserCommand userCommand = CreateUserCommand.builder()
-                .login(OLEGUITO)
-                .build();
+        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
 
         final String body = jackson.writeValueAsString(userCommand);
         mockMvc.perform(post(USERS_MAPPING + ADD)
@@ -92,11 +88,15 @@ public class UserControllerTests {
                 jsonPath("$.login", equalTo(OLEGUITO))
         );
     }
-
-    private final ResultActions postAUserByLogin(String login) throws Exception {
-        CreateUserCommand userCommand = CreateUserCommand.builder()
+    
+    private static CreateUserCommand getCreateUserCommand(String login) {
+        return CreateUserCommand.builder()
                 .login(login)
                 .build();
+    }
+    
+    private final ResultActions postAUserByLogin(String login) throws Exception {
+        CreateUserCommand userCommand = getCreateUserCommand(login);
 
         final String body = jackson.writeValueAsString(userCommand);
         return mockMvc.perform(post(USERS_MAPPING + ADD)
