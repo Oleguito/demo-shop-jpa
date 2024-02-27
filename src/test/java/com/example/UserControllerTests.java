@@ -82,6 +82,19 @@ public class UserControllerTests {
         );
     }
     
+    @Test
+    void deleteAUser() throws Exception {
+        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
+        final String body = jackson.writeValueAsString(userCommand);
+        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        System.out.println(userQuery.getId());
+        mockMvc.perform(delete(USERS_MAPPING + "/delete/" + userQuery.getId()))
+            .andExpectAll(
+            status().isOk()
+        );
+    }
+    
     private static CreateUserCommand getCreateUserCommand(String login) {
         return CreateUserCommand.builder()
                 .login(login)

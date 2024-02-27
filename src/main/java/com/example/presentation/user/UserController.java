@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.settings.Settings;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.settings.Settings.*;
 
@@ -41,11 +42,14 @@ public class UserController {
         User fromCommand = userMapper.toUser(userCommand);
         User user = userService.addUser(fromCommand);
         UserQuery userQuery = userMapper.toUserQuery(user);
-        //
-        // System.out.println(fromCommand);
-        // System.out.println(user);
-        // System.out.println(userQuery);
         return userQuery;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteAUser(@PathVariable Long id) {
+        Optional <User> found = userService.getUserById(id);
+        if(found.isEmpty()) return;
+        User user = found.get();
+        userService.deleteUser(user);
+    }
 }
