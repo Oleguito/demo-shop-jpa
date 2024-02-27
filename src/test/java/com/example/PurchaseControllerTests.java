@@ -46,7 +46,7 @@ public class PurchaseControllerTests {
     
     @Test
     void listAllPurchasesByUser() throws Exception {
-        mockMvc.perform(get("/purchases?id=1")).andExpectAll(
+        mockMvc.perform(get("/purchases/1")).andExpectAll(
                 status().isOk(),
                 jsonPath("$", hasSize(greaterThanOrEqualTo(0)))
         );

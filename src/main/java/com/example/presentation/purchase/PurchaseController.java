@@ -16,8 +16,8 @@ public class PurchaseController {
 
     private PurchaseService purchaseService;
     
-    @GetMapping()
-    public List <Purchase> getAllPurchasesByUser(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public List <Purchase> getAllPurchasesByUser(@PathVariable Long id) {
         return new ArrayList <>();
     }
 
