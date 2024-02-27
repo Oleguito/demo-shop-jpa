@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
+@SpringBootTest(classes = ShopApplication.class)
 public class PurchaseTests {
     
     @Test
@@ -20,5 +20,6 @@ public class PurchaseTests {
         final var purchase = Purchase.builder().build();
         assertTrue(purchase != null);
     }
+    
     
 }

@@ -8,6 +8,7 @@ import com.example.testutil.TestUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,17 +60,23 @@ public class UserControllerTests {
     
     @Test
     void getAUserById() throws Exception {
-        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
-        final String body = jackson.writeValueAsString(userCommand);
-        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        ResultActions resultActions = postAUser(OLEGUITO);
         UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
-
+        
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
             .andExpectAll(
             status().isOk(),
             jsonPath("$.login").exists(),
             jsonPath("$.login").value(OLEGUITO)
         );
+    }
+    
+    @NotNull
+    private ResultActions postAUser(String login) throws JsonProcessingException {
+        CreateUserCommand userCommand = getCreateUserCommand(login);
+        final String body = jackson.writeValueAsString(userCommand);
+        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        return resultActions;
     }
     
     @Test
@@ -86,9 +93,7 @@ public class UserControllerTests {
     
     @Test
     void deleteAUser() throws Exception {
-        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
-        final String body = jackson.writeValueAsString(userCommand);
-        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        ResultActions resultActions = postAUser(OLEGUITO);
         UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
         
         mockMvc.perform(delete(USERS_MAPPING + "/delete/" + userQuery.getId()))
