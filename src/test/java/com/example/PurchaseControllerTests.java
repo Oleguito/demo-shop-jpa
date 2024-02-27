@@ -2,13 +2,13 @@ package com.example;
 
 import com.example.domain.entity.Purchase;
 import com.example.presentation.purchase.PurchaseController;
+import com.example.presentation.user.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.*;
@@ -20,16 +20,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ShopApplication.class)
 public class PurchaseControllerTests {
     
-    private MockMvc mockMvc;
+    private MockMvc purchaseMockMvc;
+    private MockMvc userMockMvc;
     
     @Autowired
     private PurchaseController purchaseController;
+    
+    @Autowired
+    private UserController userController;
     
     private ObjectMapper jackson;
     
     @BeforeEach
     void setUp() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(purchaseController).build();
+        this.purchaseMockMvc = MockMvcBuilders.standaloneSetup(purchaseController).build();
+        this.userMockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
     
     @Test
@@ -46,7 +51,8 @@ public class PurchaseControllerTests {
     
     @Test
     void listAllPurchasesByUser() throws Exception {
-        mockMvc.perform(get("/purchases/1")).andExpectAll(
+        
+        purchaseMockMvc.perform(get("/purchases/1")).andExpectAll(
                 status().isOk(),
                 jsonPath("$", hasSize(greaterThanOrEqualTo(0)))
         );
