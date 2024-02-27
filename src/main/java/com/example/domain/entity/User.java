@@ -4,6 +4,8 @@ import com.example.domain.valueobject.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,4 +17,5 @@ import lombok.*;
 public class User extends BaseEntity {
     
     String login;
+
 }

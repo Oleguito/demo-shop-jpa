@@ -1,9 +1,18 @@
 package com.example.domain.entity;
 
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import com.example.domain.valueobject.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
 
 @NoArgsConstructor
 @Builder
-public class Purchase {
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+public class Purchase extends BaseEntity {
+    
+    @ManyToOne
+    User user;
 }

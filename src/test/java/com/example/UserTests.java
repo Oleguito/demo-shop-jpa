@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.ShopApplication;
+import com.example.domain.entity.Purchase;
 import com.example.domain.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,5 @@ public class UserTests {
         User user = User.builder().build();
         assertTrue(user != null);
     }
-   
-    
+
 }

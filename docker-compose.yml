@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=demo_shop_user
+      - POSTGRES_DB=demo_shop_db
+      - POSTGRES_PASSWORD=12345
