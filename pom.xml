@@ -111,6 +111,12 @@
                         <arg>
                             -Amapstruct.defaultComponentModel=spring
                         </arg>
+                        <arg>
+                            -Amapstruct.suppressGeneratorTimestamp=false
+                        </arg>
+                        <arg>
+                            -Amapstruct.unmappedSourcePolicy=WARN
+                        </arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
