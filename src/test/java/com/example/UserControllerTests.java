@@ -58,7 +58,7 @@ public class UserControllerTests {
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
         ResultActions resultActions = TestUtils.postSomething(mockMvc, body, USERS_MAPPING + ADD);
-        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        UserQuery userQuery = TestUtils.userQueryfromPostResult(resultActions, jackson);
 
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
             .andExpectAll(
@@ -68,20 +68,6 @@ public class UserControllerTests {
         );
     }
     
-    private UserQuery userQueryfromPostResult(ResultActions resultActions, ObjectMapper jackson) {
-        try {
-            return jackson.readValue(
-                    resultActions.andReturn().getResponse().getContentAsString(),
-                    UserQuery.class
-            );
-        } catch (JsonMappingException e) {
-            throw new RuntimeException(e);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-    }
     
     @Test
     void addUser() throws Exception {

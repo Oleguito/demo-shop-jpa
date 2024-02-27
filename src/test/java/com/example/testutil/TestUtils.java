@@ -2,13 +2,16 @@ package com.example.testutil;
 
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
 import com.example.presentation.product.dto.command.CreateProductCommand;
+import com.example.presentation.user.dto.queries.UserQuery;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -64,11 +67,18 @@ public class TestUtils {
         }
     }
     
-    // public static CreateCategoryCommand
-    // createCategoryCommandByTitle(String title) {
-    //     CreateCategoryCommand categoryCommand =
-    //             new CreateCategoryCommand();
-    //     categoryCommand.setTitle(title);
-    //     return categoryCommand;
-    // }
+    public static UserQuery userQueryfromPostResult(ResultActions resultActions, ObjectMapper jackson) {
+        try {
+            return jackson.readValue(
+                    resultActions.andReturn().getResponse().getContentAsString(),
+                    UserQuery.class
+            );
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
