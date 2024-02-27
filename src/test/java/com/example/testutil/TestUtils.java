@@ -21,24 +21,6 @@ public class TestUtils {
 
     private final static ObjectMapper jackson = new ObjectMapper();
     
-    @NotNull
-    public static <T> ResultActions postEntityWithMockMvc(
-            MockMvc mockMvc,
-            T entity,
-            String path) {
-        try {
-            String body = jackson.writeValueAsString(entity);
-            var result =
-                    mockMvc.perform(post(path)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(body)
-            );
-            return result;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
     public static ResultActions postSomething(
             MockMvc mockMvc,
             String body,
