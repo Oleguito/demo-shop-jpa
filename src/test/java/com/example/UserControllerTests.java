@@ -68,17 +68,18 @@ public class UserControllerTests {
         );
     }
     
-    
     @Test
     void addUser() throws Exception {
         final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
 
         final String body = jackson.writeValueAsString(userCommand);
-        mockMvc.perform(post(USERS_MAPPING + ADD)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body)
-        ).andExpectAll(
+        // mockMvc.perform(post()
+        //         .contentType(MediaType.APPLICATION_JSON)
+        //         .content(body)
+        // )
+        TestUtils.postSomething(mockMvc, body, USERS_MAPPING + ADD)
+                .andExpectAll(
                 status().isOk(),
                 jsonPath("$.login", equalTo(OLEGUITO))
         );
