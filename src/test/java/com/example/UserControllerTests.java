@@ -71,13 +71,6 @@ public class UserControllerTests {
         );
     }
     
-    @NotNull
-    private ResultActions postAUser(String login) throws JsonProcessingException {
-        CreateUserCommand userCommand = getCreateUserCommand(login);
-        final String body = jackson.writeValueAsString(userCommand);
-        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
-        return resultActions;
-    }
     
     @Test
     void addUser() throws Exception {
@@ -132,6 +125,14 @@ public class UserControllerTests {
         return CreateUserCommand.builder()
                 .login(login)
                 .build();
+    }
+    @NotNull
+    private ResultActions postAUser(String login) throws JsonProcessingException {
+        CreateUserCommand userCommand = getCreateUserCommand(login);
+        final String body = jackson.writeValueAsString(userCommand);
+        // ResultActions resultActions = postSomething(mockMvc, body, );
+        // return resultActions;
+        return postSomething(mockMvc, body, USERS_MAPPING + ADD);
     }
     
 }
