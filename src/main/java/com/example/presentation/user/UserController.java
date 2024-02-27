@@ -4,6 +4,7 @@ import com.example.application.UserService;
 import com.example.application.mappers.UserMapper;
 import com.example.domain.entity.User;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
+import com.example.presentation.user.dto.commands.UpdateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,12 @@ public class UserController {
         if(found.isEmpty()) return;
         User user = found.get();
         userService.deleteUser(user);
+    }
+    
+    @PutMapping("/{id}")
+    public UserQuery updateAUser(@PathVariable Long id, @RequestBody UpdateUserCommand updateUserCommand) {
+        User updated = userService.updateUser(id,
+                userMapper.toUser(updateUserCommand));
+        return userMapper.toUserQuery(updated);
     }
 }

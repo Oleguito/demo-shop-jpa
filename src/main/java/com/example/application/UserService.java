@@ -6,6 +6,7 @@ import com.example.presentation.user.dto.queries.UserQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,25 @@ public class UserService {
     
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+    
+    public User updateUser(Long id, User newUser) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isEmpty()) return new User();
+        User user = optionalUser.get();
+        for(var field : newUser.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            if(field.getName().equals("id")) continue;
+            trySet(newUser, field, user);
+        }
+        return user;
+    }
+    
+    private static void trySet(User newUser, Field field, User user) {
+        try {
+            field.set(user, field.get(newUser));
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

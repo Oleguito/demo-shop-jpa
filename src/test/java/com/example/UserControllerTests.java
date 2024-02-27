@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
+import com.example.presentation.user.dto.commands.UpdateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import com.example.testutil.TestUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
@@ -88,7 +90,7 @@ public class UserControllerTests {
         final String body = jackson.writeValueAsString(userCommand);
         ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
         UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
-        System.out.println(userQuery.getId());
+        
         mockMvc.perform(delete(USERS_MAPPING + "/delete/" + userQuery.getId()))
             .andExpectAll(
             status().isOk()
@@ -97,6 +99,27 @@ public class UserControllerTests {
             .andExpectAll(
             status().isOk(),
             jsonPath("$.login").doesNotExist()
+        );
+    }
+    
+    @Test
+    void updateAUser() throws Exception {
+        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
+        String body = jackson.writeValueAsString(userCommand);
+        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        
+        UpdateUserCommand updateUserCommand = UpdateUserCommand.builder()
+                .login("tenzuro")
+                .build();
+        body = jackson.writeValueAsString(updateUserCommand);
+        mockMvc.perform(put(USERS_MAPPING + "/" + userQuery.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body)
+        )
+            .andExpectAll(
+            status().isOk(),
+            jsonPath("$.login").value("tenzuro")
         );
     }
     
