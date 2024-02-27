@@ -1,11 +1,13 @@
 package com.example;
 
+import com.example.application.mappers.UserMapper;
 import com.example.domain.entity.Purchase;
 import com.example.presentation.purchase.PurchaseController;
 import com.example.presentation.user.UserController;
 import com.example.settings.Settings;
 import com.example.testutil.TestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class PurchaseControllerTests {
     
     private MockMvc purchaseMockMvc;
     private MockMvc userMockMvc;
+    
+    @Autowired
+    private UserMapper userMapper;
     
     @Autowired
     private PurchaseController purchaseController;
@@ -60,21 +65,27 @@ public class PurchaseControllerTests {
     
     @Test
     void listAllPurchasesByUser() throws Exception {
-        final var cmd
+        final var userCommand
                 = getCreateUserCommand("oleguito");
         final var body
-                = jackson.writeValueAsString(cmd);
+                = jackson.writeValueAsString(userCommand);
         final var postResult
                 = postSomething(userMockMvc, body, USERS_MAPPING + ADD);
         final var userQuery
                 = TestUtils.userQueryfromPostResult(postResult, jackson);
         final var id = userQuery.getId();
         System.out.println(id);
+        
+        final var purchase = Purchase.builder()
+                .user(userMapper.toUser(userCommand))
+                .build();
+        
         purchaseMockMvc.perform(get("/purchases/" + id))
                 .andExpectAll(
                 status().isOk(),
                 jsonPath("$",
                         hasSize(greaterThanOrEqualTo(0)))
+                // jsonPath("$.user").exists()
         );
     }
 }
