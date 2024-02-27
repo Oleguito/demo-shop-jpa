@@ -39,6 +39,8 @@ public class UserControllerTests {
 
     @Autowired
     private ObjectMapper jackson;
+    
+    private final String OLEGUITO = "oleguito";
 
     @BeforeEach
     void setUp() {
@@ -55,7 +57,6 @@ public class UserControllerTests {
     
     @Test
     void getAUserById() throws Exception {
-        final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
         ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
@@ -71,7 +72,6 @@ public class UserControllerTests {
     
     @Test
     void addUser() throws Exception {
-        final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
 
