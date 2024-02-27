@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private ProductService productService;
+    
     private ModelMapper modelMapper;
     
     @GetMapping("/all")
@@ -35,6 +36,7 @@ public class ProductController {
         Product product = productService.create(productFromCommand);
         return modelMapper.map(product, ProductQuery.class);
     }
+    
 }
 
 

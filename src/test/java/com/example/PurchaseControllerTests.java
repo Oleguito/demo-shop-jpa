@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = ShopApplication.class)
 public class PurchaseControllerTests {
@@ -41,6 +44,8 @@ public class PurchaseControllerTests {
     
     @Test
     void listAllPurchasesByUser() throws Exception {
-    
+        mockMvc.perform(get("/purchases?id=1")).andExpectAll(
+                status().isOk()
+        );
     }
 }
