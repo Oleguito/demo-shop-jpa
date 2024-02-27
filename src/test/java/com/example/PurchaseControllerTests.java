@@ -65,6 +65,7 @@ public class PurchaseControllerTests {
         final var userQuery
                 = TestUtils.userQueryfromPostResult(postResult, jackson);
         final var id = userQuery.getId();
+        System.out.println(id);
         purchaseMockMvc.perform(get("/purchases/" + id))
                 .andExpectAll(
                 status().isOk(),
