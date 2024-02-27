@@ -4,6 +4,7 @@ import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.settings.Settings;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.UnsupportedEncodingException;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -54,17 +57,10 @@ public class UserControllerTests {
     void getAUserById() throws Exception {
         final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
-
         final String body = jackson.writeValueAsString(userCommand);
-        MvcResult mvcResult = mockMvc.perform(post(USERS_MAPPING + ADD)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body)
-        ).andReturn();
-        UserQuery userQuery = jackson.readValue(
-                mvcResult.getResponse().getContentAsString(),
-                UserQuery.class);
-
-        System.out.println("-----------------------------------" + userQuery.getId());
+        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        
 
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
             .andExpectAll(
@@ -73,7 +69,37 @@ public class UserControllerTests {
             jsonPath("$.login").value(OLEGUITO)
         );
     }
-
+    
+    private UserQuery userQueryfromPostResult(ResultActions resultActions, ObjectMapper jackson) {
+        try {
+            return jackson.readValue(
+                    resultActions.andReturn().getResponse().getContentAsString(),
+                    UserQuery.class
+            );
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public static ResultActions postSomething(
+            MockMvc mockMvc,
+            String body,
+            String path
+    ) {
+        try {
+            return mockMvc.perform(post(path)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(body)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Пися!!", e);
+        }
+    }
+    
     @Test
     void addUser() throws Exception {
         final String OLEGUITO = "oleguito";
