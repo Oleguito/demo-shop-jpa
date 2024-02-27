@@ -3,6 +3,7 @@ package com.example;
 import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
+import com.example.testutil.TestUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,10 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import com.example.settings.Settings;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
@@ -58,7 +57,7 @@ public class UserControllerTests {
         final String OLEGUITO = "oleguito";
         CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
-        ResultActions resultActions = postSomething(mockMvc, body, USERS_MAPPING + ADD);
+        ResultActions resultActions = TestUtils.postSomething(mockMvc, body, USERS_MAPPING + ADD);
         UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
 
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
@@ -81,21 +80,6 @@ public class UserControllerTests {
             throw new RuntimeException(e);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        }
-    }
-    
-    public static ResultActions postSomething(
-            MockMvc mockMvc,
-            String body,
-            String path
-    ) {
-        try {
-            return mockMvc.perform(post(path)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(body)
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Пися!!", e);
         }
     }
     

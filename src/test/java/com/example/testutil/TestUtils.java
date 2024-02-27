@@ -49,6 +49,21 @@ public class TestUtils {
         return object;
     }
     
+    public static ResultActions postSomething(
+            MockMvc mockMvc,
+            String body,
+            String path
+    ) {
+        try {
+            return mockMvc.perform(post(path)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(body)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Пися!!", e);
+        }
+    }
+    
     // public static CreateCategoryCommand
     // createCategoryCommandByTitle(String title) {
     //     CreateCategoryCommand categoryCommand =
