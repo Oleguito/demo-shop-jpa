@@ -1,8 +1,7 @@
 package com.example.domain.entity;
 
 import com.example.domain.valueobject.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -11,8 +10,13 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Purchase extends BaseEntity {
+public class Purchase {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @ManyToOne
     User user;
+    
 }
