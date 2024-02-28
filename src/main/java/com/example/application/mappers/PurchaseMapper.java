@@ -5,7 +5,7 @@ import com.example.presentation.purchase.dto.commands.CreatePurchaseCommand;
 import com.example.presentation.purchase.dto.queries.PurchaseQuery;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface PurchaseMapper {
     
     Purchase toPurchase(CreatePurchaseCommand command);

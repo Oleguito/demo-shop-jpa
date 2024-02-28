@@ -107,20 +107,20 @@
                         </path>
                         <!-- other annotation processors -->
                     </annotationProcessorPaths>
-<!--                    <compilerArgs>-->
-<!--                        <arg>-->
-<!--                            -Amapstruct.defaultComponentModel=spring-->
-<!--                        </arg>-->
-<!--&lt;!&ndash;                        <arg>&ndash;&gt;-->
-<!--&lt;!&ndash;                            -Amapstruct.unmappedSourcePolicy=IGNORE&ndash;&gt;-->
-<!--&lt;!&ndash;                        </arg>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <arg>&ndash;&gt;-->
-<!--&lt;!&ndash;                            -Amapstruct.verbose=true&ndash;&gt;-->
-<!--&lt;!&ndash;                        </arg>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <arg>&ndash;&gt;-->
-<!--&lt;!&ndash;                            -Amapstruct.suppressGeneratorTimestamp=true&ndash;&gt;-->
-<!--&lt;!&ndash;                        </arg>&ndash;&gt;-->
-<!--                    </compilerArgs>-->
+                    <compilerArgs>
+                        <arg>
+                            -Amapstruct.defaultComponentModel=spring
+                        </arg>
+                        <arg>
+                            -Amapstruct.unmappedSourcePolicy=IGNORE
+                        </arg>
+                        <arg>
+                            -Amapstruct.verbose=true
+                        </arg>
+                        <arg>
+                            -Amapstruct.suppressGeneratorTimestamp=true
+                        </arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
