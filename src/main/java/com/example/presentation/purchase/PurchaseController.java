@@ -39,13 +39,15 @@ public class PurchaseController {
         return purchaseMapper.toQuery(fromCommand);
     }
     
-    // @GetMapping("/{id}")
-    // public List <Purchase> getAllPurchasesByUser(@PathVariable Long id) {
-    //
-    //     User user = userService.getUserById(id)
-    //             .orElseThrow(EntityNotFoundException::new);
-    //
-    //     return new ArrayList<>();
-    // }
+    @GetMapping("/{id}")
+    public List <Purchase> getAllPurchasesByUser(@PathVariable Long id) {
+
+        User user = userService.getUserById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        
+        System.out.println("found user: " + user);
+        
+        return new ArrayList<>();
+    }
 
 }

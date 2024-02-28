@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
+
 @Mapper(componentModel = "spring",
         suppressTimestampInGenerated = true,
         unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE)
@@ -22,4 +23,7 @@ public interface UserMapper {
     UserQuery toUserQuery(User user);
     
     List<UserQuery> toListUserQuery(List<User> users);
+    
+     User mapJsonToUser(String json);
+
 }

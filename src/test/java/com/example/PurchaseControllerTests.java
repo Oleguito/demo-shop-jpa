@@ -6,6 +6,8 @@ import com.example.domain.entity.User;
 import com.example.presentation.purchase.PurchaseController;
 import com.example.presentation.purchase.dto.commands.CreatePurchaseCommand;
 import com.example.presentation.user.UserController;
+import com.example.presentation.user.dto.commands.CreateUserCommand;
+import com.example.presentation.user.dto.queries.UserQuery;
 import com.example.settings.Settings;
 import com.example.testutil.TestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,29 +90,46 @@ public class PurchaseControllerTests {
         );
     }
     
-    // @Test
-    // void listAllPurchasesByUser() throws Exception {
-    //     final var userCommand
-    //             = getCreateUserCommand("oleguito");
-    //     final var body
-    //             = jackson.writeValueAsString(userCommand);
-    //     final var postResult
-    //             = postSomething(userMockMvc, body, USERS_MAPPING + ADD);
-    //     final var userQuery
-    //             = TestUtils.userQueryfromPostResult(postResult, jackson);
-    //     final var id = userQuery.getId();
-    //     System.out.println(id);
-    //
-    //     final var purchase = Purchase.builder()
-    //             .user(userMapper.toUser(userCommand))
-    //             .build();
-    //
-    //     purchaseMockMvc.perform(get("/purchases/" + id))
-    //             .andExpectAll(
-    //             status().isOk(),
-    //             jsonPath("$",
-    //                     hasSize(greaterThanOrEqualTo(0)))
-    //             // jsonPath("$.user").exists()
-    //     );
-    // }
+    @Test
+    void listAllPurchasesByUser() throws Exception {
+        // final var userCommand
+        //         = getCreateUserCommand("oleguito");
+        // final var body
+        //         = jackson.writeValueAsString(userCommand);
+        // final var postResult
+        //         = postSomething(userMockMvc, body, USERS_MAPPING + ADD);
+        // final var userQuery
+        //         = TestUtils.userQueryfromPostResult(postResult, jackson);
+        // final var id = userQuery.getId();
+        // System.out.println(id);
+        
+        final var Oleguito = "oleguito";
+        CreateUserCommand userCommand = CreateUserCommand.builder().login(Oleguito).build();
+        final var bodyUserCommand = jackson.writeValueAsString(userCommand);
+        ResultActions resultActions
+                = postSomething(userMockMvc, bodyUserCommand, USERS_MAPPING + ADD);
+        
+        final var user = jackson.readValue(
+                resultActions.andReturn().getResponse().getContentAsString(),
+                User.class
+        );
+        
+        System.out.println(user);
+        
+        final var purchase1 = Purchase.builder()
+                .user(user).build();
+        final var purchase2 = Purchase.builder()
+                .user(user).build();
+        
+        final var purchaseBody1 = jackson.writeValueAsString(purchase1);
+        postSomething(purchaseMockMvc, purchaseBody1, PURCHASES_MAPPING + ADD);
+        final var purchaseBody2 = jackson.writeValueAsString(purchase1);
+        postSomething(purchaseMockMvc, purchaseBody2, PURCHASES_MAPPING + ADD);
+        
+        purchaseMockMvc.perform(get(PURCHASES_MAPPING + "/" + user.getId()))
+                .andExpectAll(status().isOk(),
+                jsonPath("$",
+                        hasSize(greaterThanOrEqualTo(0)))
+        );
+    }
 }

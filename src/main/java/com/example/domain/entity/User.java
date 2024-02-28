@@ -6,15 +6,15 @@ import lombok.*;
 
 import java.util.List;
 
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "users")
-@Getter
 @Setter
-public class User{
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

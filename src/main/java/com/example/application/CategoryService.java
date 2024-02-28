@@ -34,9 +34,5 @@ public class CategoryService {
     public Category findByTitle(String categoryTitle) {
         return categoryRepository.findByTitle(categoryTitle);
     }
-    
-    // public Product addProduct(Product product) {
-    //     return null;
-    // }
 }
 
