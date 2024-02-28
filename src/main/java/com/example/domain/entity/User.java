@@ -22,7 +22,7 @@ public class User {
     
     String login;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Purchase> purchases;
 
 }

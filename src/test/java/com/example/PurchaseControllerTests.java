@@ -75,11 +75,11 @@ public class PurchaseControllerTests {
                 = CreatePurchaseCommand.builder()
                 .user(User.builder().login(Oleguito).build())
                 .build();
-        final var body
+        final var purchaseBody
                 = jackson.writeValueAsString(purchaseCommand);
-        System.out.println(body);
+        System.out.println(purchaseBody);
         ResultActions resultActions = postSomething(
-                purchaseMockMvc, body, PURCHASES_MAPPING + ADD
+                purchaseMockMvc, purchaseBody, PURCHASES_MAPPING + ADD
         );
         System.out.println(resultActions.andReturn().getResponse().getContentAsString());
         resultActions.andExpectAll(
@@ -88,6 +88,7 @@ public class PurchaseControllerTests {
             jsonPath("$[?(@.user.login == '" + Oleguito + "')]")
                     .exists()
         );
+        System.out.println("end of method -  -  -  -  -  -  -  -  - ");
     }
     
     @Test
@@ -114,7 +115,7 @@ public class PurchaseControllerTests {
                 User.class
         );
         
-        System.out.println(user);
+        System.out.println("posted a user for 2 purchases: " + user);
         
         final var purchase1 = Purchase.builder()
                 .user(user).build();
@@ -126,7 +127,8 @@ public class PurchaseControllerTests {
         final var purchaseBody2 = jackson.writeValueAsString(purchase1);
         postSomething(purchaseMockMvc, purchaseBody2, PURCHASES_MAPPING + ADD);
         
-        purchaseMockMvc.perform(get(PURCHASES_MAPPING + "/" + user.getId()))
+        purchaseMockMvc.perform(
+                get(PURCHASES_MAPPING + "/" + user.getId()))
                 .andExpectAll(status().isOk(),
                 jsonPath("$",
                         hasSize(greaterThanOrEqualTo(0)))

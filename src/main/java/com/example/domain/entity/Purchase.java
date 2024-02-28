@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@Table(name = "purchases")
 public class Purchase {
     
     @Id
