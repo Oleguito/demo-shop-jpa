@@ -1,7 +1,7 @@
 @echo off
 set JAVA_HOME=C:\JDK17\jdk-17.0.2+8
 
-call mvnw test
+call mvnw test clean
 
 IF %ERRORLEVEL% EQU 0 (
    git add .

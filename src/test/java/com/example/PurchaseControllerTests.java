@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = ShopApplication.class)
 @Transactional
-@Rollback
+@Rollback(false)
 public class PurchaseControllerTests {
     
     private MockMvc purchaseMockMvc;
@@ -77,10 +77,13 @@ public class PurchaseControllerTests {
                 .build();
         final var purchaseBody
                 = jackson.writeValueAsString(purchaseCommand);
+        System.out.println("purchase BODY:");
         System.out.println(purchaseBody);
+        
         ResultActions resultActions = postSomething(
                 purchaseMockMvc, purchaseBody, PURCHASES_MAPPING + ADD
         );
+        System.out.println("POST Result");
         System.out.println(resultActions.andReturn().getResponse().getContentAsString());
         resultActions.andExpectAll(
             status().isOk(),
@@ -88,21 +91,10 @@ public class PurchaseControllerTests {
             jsonPath("$[?(@.user.login == '" + Oleguito + "')]")
                     .exists()
         );
-        System.out.println("end of method -  -  -  -  -  -  -  -  - ");
     }
     
     @Test
     void listAllPurchasesByUser() throws Exception {
-        // final var userCommand
-        //         = getCreateUserCommand("oleguito");
-        // final var body
-        //         = jackson.writeValueAsString(userCommand);
-        // final var postResult
-        //         = postSomething(userMockMvc, body, USERS_MAPPING + ADD);
-        // final var userQuery
-        //         = TestUtils.userQueryfromPostResult(postResult, jackson);
-        // final var id = userQuery.getId();
-        // System.out.println(id);
         
         final var Oleguito = "oleguito";
         CreateUserCommand userCommand = CreateUserCommand.builder().login(Oleguito).build();
@@ -123,13 +115,22 @@ public class PurchaseControllerTests {
                 .user(user).build();
         
         final var purchaseBody1 = jackson.writeValueAsString(purchase1);
-        postSomething(purchaseMockMvc, purchaseBody1, PURCHASES_MAPPING + ADD);
+        ResultActions resultActions2 = postSomething(purchaseMockMvc, purchaseBody1, PURCHASES_MAPPING + ADD);
         final var purchaseBody2 = jackson.writeValueAsString(purchase1);
-        postSomething(purchaseMockMvc, purchaseBody2, PURCHASES_MAPPING + ADD);
+        ResultActions resultActions3 = postSomething(purchaseMockMvc, purchaseBody2, PURCHASES_MAPPING + ADD);
         
-        purchaseMockMvc.perform(
-                get(PURCHASES_MAPPING + "/" + user.getId()))
-                .andExpectAll(status().isOk(),
+        
+        System.out.println(resultActions2.andReturn().getResponse().getContentAsString());
+        System.out.println(resultActions3.andReturn().getResponse().getContentAsString());
+        
+        
+        ResultActions resultActions1 = purchaseMockMvc.perform(
+                get(PURCHASES_MAPPING + "/" + user.getId()));
+        
+        System.out.println("GET returned result:");
+        System.out.println(resultActions1.andReturn().getResponse().getContentAsString());
+        
+        resultActions1.andExpectAll(status().isOk(),
                 jsonPath("$",
                         hasSize(greaterThanOrEqualTo(0)))
         );

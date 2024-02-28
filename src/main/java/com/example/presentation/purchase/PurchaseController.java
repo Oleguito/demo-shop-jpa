@@ -40,14 +40,16 @@ public class PurchaseController {
     }
     
     @GetMapping("/{id}")
-    public List <Purchase> getAllPurchasesByUser(@PathVariable Long id) {
+    public List <PurchaseQuery> getAllPurchasesByUser(@PathVariable Long id) {
 
         User user = userService.getUserById(id)
                 .orElseThrow(EntityNotFoundException::new);
         
         System.out.println("production found user: " + user);
         
-        return new ArrayList<>();
+        return purchaseMapper.toListQueries(
+                purchaseService.getPurchasesBy(user)
+        );
     }
 
 }
