@@ -79,7 +79,8 @@ public class PurchaseControllerTests {
                 purchaseMockMvc, body, "/purchases/add"
         );
         resultActions.andExpectAll(
-                status().isOk()
+                status().isOk(),
+                jsonPath("$[?(@.user)]").exists()
         );
     }
     
