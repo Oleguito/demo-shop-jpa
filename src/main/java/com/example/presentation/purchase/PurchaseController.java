@@ -45,7 +45,7 @@ public class PurchaseController {
         User user = userService.getUserById(id)
                 .orElseThrow(EntityNotFoundException::new);
         
-        System.out.println("found user: " + user);
+        System.out.println("production found user: " + user);
         
         return new ArrayList<>();
     }
