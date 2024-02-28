@@ -70,7 +70,7 @@ public class PurchaseControllerTests {
 
     @Test
     void createANewPurchase() throws Exception {
-        final var Oleguito = "oleguito";
+        final var Oleguito = "oleguitoNewPurchase";
         final var purchaseCommand
                 = CreatePurchaseCommand.builder()
                 .user(User.builder().login(Oleguito).build())
