@@ -2,6 +2,7 @@ package com.example.presentation.purchase;
 
 import com.example.application.PurchaseService;
 import com.example.application.UserService;
+import com.example.application.mappers.PurchaseMapper;
 import com.example.domain.entity.Purchase;
 import com.example.domain.entity.User;
 import com.example.presentation.purchase.dto.commands.CreatePurchaseCommand;
@@ -23,11 +24,18 @@ public class PurchaseController {
     
     private UserService userService;
     
+    private PurchaseMapper purchaseMapper;
+    
     @PostMapping("/add")
     public PurchaseQuery addPurchase(
             @RequestBody CreatePurchaseCommand purchaseCommand) {
         
-        return new PurchaseQuery();
+        final var fromCommand
+                = purchaseMapper.toPurchase(purchaseCommand);
+        
+        
+        
+        return purchaseMapper.toQuery(fromCommand);
         
     }
     

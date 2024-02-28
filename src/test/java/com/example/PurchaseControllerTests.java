@@ -78,9 +78,11 @@ public class PurchaseControllerTests {
         ResultActions resultActions = postSomething(
                 purchaseMockMvc, body, "/purchases/add"
         );
+        System.out.println(resultActions.andReturn().getResponse().getContentAsString());
         resultActions.andExpectAll(
                 status().isOk(),
-                jsonPath("$[?(@.user)]").exists()
+                jsonPath("$[?(@.user)]").exists(),
+                jsonPath("$[?(@.user.login == 'oleguito')]").exists()
         );
     }
     
