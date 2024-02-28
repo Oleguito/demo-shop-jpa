@@ -68,21 +68,23 @@ public class PurchaseControllerTests {
 
     @Test
     void createANewPurchase() throws Exception {
+        final var Oleguito = "oleguito";
         final var purchaseCommand
                 = CreatePurchaseCommand.builder()
-                .user(User.builder().login("oleguito").build())
+                .user(User.builder().login(Oleguito).build())
                 .build();
         final var body
                 = jackson.writeValueAsString(purchaseCommand);
         System.out.println(body);
         ResultActions resultActions = postSomething(
-                purchaseMockMvc, body, "/purchases/add"
+                purchaseMockMvc, body, PURCHASES_MAPPING + ADD
         );
         System.out.println(resultActions.andReturn().getResponse().getContentAsString());
         resultActions.andExpectAll(
-                status().isOk(),
-                jsonPath("$[?(@.user)]").exists(),
-                jsonPath("$[?(@.user.login == 'oleguito')]").exists()
+            status().isOk(),
+            jsonPath("$[?(@.user)]").exists(),
+            jsonPath("$[?(@.user.login == '" + Oleguito + "')]")
+                    .exists()
         );
     }
     

@@ -28,4 +28,6 @@ public class Settings {
     
     public static final String ADD
             = "/add";
+    public static final String PURCHASES_MAPPING
+            = "/purchases";
 }

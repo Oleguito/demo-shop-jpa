@@ -1,5 +1,6 @@
 package com.example.presentation.purchase;
 
+import com.example.settings.Settings;
 import com.example.application.PurchaseService;
 import com.example.application.UserService;
 import com.example.application.mappers.PurchaseMapper;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.settings.Settings.*;
+
 @RestController
 @AllArgsConstructor
-@RequestMapping("/purchases")
+@RequestMapping(PURCHASES_MAPPING)
 public class PurchaseController {
 
     private PurchaseService purchaseService;
@@ -26,17 +29,14 @@ public class PurchaseController {
     
     private PurchaseMapper purchaseMapper;
     
-    @PostMapping("/add")
+    @PostMapping(ADD)
     public PurchaseQuery addPurchase(
             @RequestBody CreatePurchaseCommand purchaseCommand) {
         
         final var fromCommand
                 = purchaseMapper.toPurchase(purchaseCommand);
         
-        
-        
         return purchaseMapper.toQuery(fromCommand);
-        
     }
     
     // @GetMapping("/{id}")
