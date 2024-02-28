@@ -5,9 +5,7 @@ import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.product.dto.query.ProductQuery;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        suppressTimestampInGenerated = true,
-        unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE)
+@Mapper
 public interface ProductMapper {
     
     public Product fromCommand(CreateProductCommand command);
