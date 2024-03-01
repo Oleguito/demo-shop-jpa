@@ -12,6 +12,7 @@ import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import com.example.testutil.AllControllers;
+import com.example.testutil.Crude;
 import com.example.testutil.PathReturners;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,7 +74,7 @@ public class UserControllerTests {
     
     @Test
     void getAUserById() throws Exception {
-        CreateUserCommand Oleguito = allControllers.createUserCommand(OLEGUITO);
+        CreateUserCommand Oleguito = Crude.createUserCommand(OLEGUITO);
         UserQuery userQuery = allControllers.getUserController().postAUser(Oleguito);
         
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
@@ -89,7 +90,7 @@ public class UserControllerTests {
     @Test
     void addUser() throws Exception {
         CreateUserCommand userCommand
-                = allControllers.createUserCommand(OLEGUITO);
+                = Crude.createUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
 
         postSomething(mockMvc, body, USERS_MAPPING + ADD)
@@ -102,7 +103,7 @@ public class UserControllerTests {
     @Test
     void deleteAUser() throws Exception {
         final var oleguitoUserCommand
-                = allControllers.createUserCommand(OLEGUITO);
+                = Crude.createUserCommand(OLEGUITO);
         ResultActions resultActions = postAUser(oleguitoUserCommand);
         UserQuery userQuery = userQueryfromPostResult(resultActions);
         
