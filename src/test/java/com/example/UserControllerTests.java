@@ -114,11 +114,21 @@ public class UserControllerTests {
         );
     }
     
+    @Test
+    void getUsersProductBin_listOfProducts() throws Exception {
+        mockMvc.perform(
+                get("/users/oleguito/product-bin"))
+               .andExpectAll(
+            status().isOk()
+        );
+    }
+    
     @NotNull
     private ResultActions postAUser(String login) throws JsonProcessingException {
         CreateUserCommand userCommand = getCreateUserCommand(login);
         final String body = jackson.writeValueAsString(userCommand);
         return postSomething(mockMvc, body, USERS_MAPPING + ADD);
     }
+    
     
 }

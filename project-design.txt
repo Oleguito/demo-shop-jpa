@@ -24,6 +24,4 @@ POST /categories/foods/add
 /users/delete/oleguito
 /users/update/oleguito
 
-/purchase?username=oleguito
-/purchase/history?username=oleguito
-/purchase/products-bin?username=oleguito
+/users/oleguito/product-bin
