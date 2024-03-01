@@ -7,11 +7,11 @@ import com.example.presentation.category.CategoryController;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
 import com.example.presentation.product.ProductController;
 import com.example.presentation.product.dto.command.CreateProductCommand;
-import com.example.presentation.productbin.dto.quieries.ProductBinQuery;
 import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
+import com.example.testutil.PathReturners;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +25,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import static com.example.testutil.PathReturners.getPathToListProductsInAUsersProductBin;
 import static com.example.testutil.TestUtils.*;
@@ -153,7 +150,7 @@ public class UserControllerTests {
         final User postedUser = postAndReturnUser("oleguito", mockMvc, jackson);
         final var productName = "bread";
         final var productCategory = "foods";
-        final String path = getPathToAddProductToAUsersProductBin(
+        final String path = PathReturners.getPathToAddProductToAUsersProductBin(
                     postedUser.getId());
         
         final String body = jackson.writeValueAsString(
@@ -201,7 +198,7 @@ public class UserControllerTests {
             Long productId, Long userId) throws Exception {
         
         return mockMvc.perform(delete(
-                getPathToDeleteProductFromAUsersProductBin(
+                PathReturners.getPathToDeleteProductFromAUsersProductBin(
                         userId, productId
                 )));
     }
