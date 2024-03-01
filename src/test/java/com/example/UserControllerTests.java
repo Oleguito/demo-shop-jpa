@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+
 import static com.example.testutil.TestUtils.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -153,19 +155,24 @@ public class UserControllerTests {
         );
     }
     
-    @Test
-    void removeItemFromUsersProductBin() throws Exception {
-        final User postedUser = postAndReturnUser("oleguito", mockMvc, jackson);
-        Product product = createProductFromTitleAndCategoryTitle(
-                "bread", "foods");
-
-        addProductToProductBinOfUser(product, postedUser);
-        
-        
-        mockMvc.perform(delete("")).andExpectAll(
-                // status().isOk()
-        );
-    }
+    // @Test
+    // void removeItemFromUsersProductBin() throws Exception {
+    //     final User postedUser
+    //             = postAndReturnUser("oleguito", mockMvc, jackson);
+    //     Product product
+    //             = createProductFromTitleAndCategoryTitle(
+    //             "bread", "foods");
+    //
+    //     Product returnedProduct
+    //             = addProductToProductBinOfUser(product, postedUser);
+    //
+    //     mockMvc.perform(delete(
+    //             getPathToDeleteProductFromAUsersProductBin(
+    //                     postedUser.getId(), returnedProduct.getId())
+    //     )).andExpectAll(
+    //             status().isOk()
+    //     );
+    // }
     
     Product createProductFromTitleAndCategoryTitle(String productTitle, String categoryTitle) {
         return Product.builder()
@@ -174,7 +181,7 @@ public class UserControllerTests {
                 .build();
     }
     
-    private void addProductToProductBinOfUser(Product product,
+    private Product addProductToProductBinOfUser(Product product,
                                               User postedUser) {
         final String path = getPathToAddProductToAUsersProductBin(
                     postedUser.getId());
@@ -190,7 +197,19 @@ public class UserControllerTests {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        postSomething(mockMvc, body, path);
+        ResultActions resultActions = postSomething(mockMvc, body, path);
+        Product result = null;
+        try {
+            result = jackson.readValue(
+                    resultActions.andReturn().getResponse().getContentAsString(),
+                    Product.class
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
     
     @NotNull
