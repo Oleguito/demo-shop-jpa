@@ -40,4 +40,7 @@ public class Settings {
     
     public static final String PRODUCT_BIN
             = "/product-bin";
+    
+    public static final String ADD_USER
+            = ADD;
 }

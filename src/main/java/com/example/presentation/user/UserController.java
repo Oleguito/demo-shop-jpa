@@ -73,7 +73,7 @@ public class UserController {
         return userMapper.toUserQuery(updated);
     }
     
-    @GetMapping(path = "/{userName}/" + PRODUCT_BIN_NO_SLASH,
+    @GetMapping(path = "/{userName}" + PRODUCT_BIN,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductBinQuery> getProductBinOfA(
             @PathVariable String userName

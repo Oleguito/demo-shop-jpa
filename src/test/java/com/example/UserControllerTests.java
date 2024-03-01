@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.settings.Settings;
 import com.example.domain.entity.Category;
 import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
@@ -27,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import static com.example.testutil.PathReturners.getPathToListProductsInAUsersProductBin;
 import static com.example.testutil.TestUtils.*;
@@ -86,14 +88,13 @@ public class UserControllerTests {
         );
     }
     
-    
     @Test
     void addUser() throws Exception {
         CreateUserCommand userCommand
                 = Crude.createUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
 
-        postSomething(mockMvc, body, USERS_MAPPING + ADD)
+        postSomething(mockMvc, body, USERS_MAPPING + Settings.ADD_USER)
                 .andExpectAll(
                 status().isOk(),
                 jsonPath("$.login", equalTo(OLEGUITO))
