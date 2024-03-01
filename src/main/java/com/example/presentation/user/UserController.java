@@ -87,9 +87,12 @@ public class UserController {
         return ResponseEntity.ok(productBinQuery);
     }
     
-    @DeleteMapping("/{userId}/product-bin/delete")
-    public void deleteProductFromUsersProductBin(@PathVariable Long userId) {
+    @DeleteMapping("/{userId}/product-bin/delete/{productId}")
+    public void deleteProductFromUsersProductBin(
+            @PathVariable Long userId,
+            @PathVariable Long productId) {
     
+        
     }
     
     @PostMapping("/{userId}" + SLASH + PRODUCT_BIN + ADD)

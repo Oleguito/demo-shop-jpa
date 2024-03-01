@@ -173,12 +173,20 @@ public class UserControllerTests {
         Product product = createAProduct("bread", category.getId());
         addProductToProductBinOfUser(product, user);
         
-        // TODO
-        
-        // removeProductFromProductBinOfAUser(product, user).andExpectAll(
-        //         status().isOk()
-        // );
+        removeProductFromProductBinOfAUser(product.getId(),
+                                            user.getId()).andExpectAll(
+                status().isOk()
+        );
 
+    }
+    
+    private ResultActions removeProductFromProductBinOfAUser(
+            Long productId, Long userId) throws Exception {
+        
+        return mockMvc.perform(delete(
+                getPathToDeleteProductFromAUsersProductBin(
+                        userId, productId
+                )));
     }
     
     private Category createCategory(String categoryTitle) {
