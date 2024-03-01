@@ -4,6 +4,7 @@ import com.example.domain.entity.Category;
 import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
 import com.example.presentation.product.dto.command.CreateProductCommand;
+import com.example.presentation.productbin.dto.quieries.ProductBinQuery;
 import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
@@ -198,18 +199,19 @@ public class UserControllerTests {
             throw new RuntimeException(e);
         }
         ResultActions resultActions = postSomething(mockMvc, body, path);
-        Product result = null;
+        ProductBinQuery result = null;
         try {
             result = jackson.readValue(
                     resultActions.andReturn().getResponse().getContentAsString(),
-                    Product.class
+                    ProductBinQuery.class
             );
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        return result;
+        int length = result.getItems().size();
+        return result.getItems().get(length - 1);
     }
     
     @NotNull
