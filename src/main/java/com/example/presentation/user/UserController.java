@@ -1,8 +1,12 @@
 package com.example.presentation.user;
 
 import com.example.application.UserService;
+import com.example.application.mappers.ProductBinMapper;
+import com.example.application.mappers.ProductMapper;
 import com.example.application.mappers.UserMapper;
+import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
+import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.product.dto.query.ProductQuery;
 import com.example.presentation.productbin.dto.quieries.ProductBinQuery;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
@@ -32,6 +36,10 @@ public class UserController {
     private UserService userService;
     
     private UserMapper userMapper;
+    
+    private ProductMapper productMapper;
+    
+    private ProductBinMapper productBinMapper;
     
     @GetMapping
     public List <UserQuery> getAllUsers() {
@@ -69,7 +77,7 @@ public class UserController {
         return userMapper.toUserQuery(updated);
     }
     
-    @GetMapping(path = "/{userName}/product-bin",
+    @GetMapping(path = "/{userName}/" + PRODUCT_BIN,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductBinQuery> getProductBinOfA(
             @PathVariable String userName
@@ -78,15 +86,16 @@ public class UserController {
         ProductBinQuery productBinQuery = new ProductBinQuery();
         return ResponseEntity.ok(productBinQuery);
     }
+    
+    @PostMapping("/{userId}" + SLASH + PRODUCT_BIN + ADD)
+    public ProductBinQuery putAnItemInAProductBin(
+            @PathVariable Long userId,
+            @RequestBody CreateProductCommand productCommand
+    ) {
+        Product fromCommand
+                = productMapper.fromCommand(productCommand);
+        final var newBin
+                = userService.putItemInAProductBinForUserWith(userId, fromCommand);
+        return productBinMapper.toQuery(newBin);
+    }
 }
-
-
-
-
-
-
-
-
-
-
-

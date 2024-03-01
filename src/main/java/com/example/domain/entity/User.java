@@ -22,6 +22,9 @@ public class User {
     
     String login;
     
+    @OneToOne
+    private final ProductBin productBin = new ProductBin();
+    
     @OneToMany
     private List<Purchase> purchases;
 

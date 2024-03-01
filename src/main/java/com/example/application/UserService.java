@@ -1,7 +1,10 @@
 package com.example.application;
 
+import com.example.domain.entity.Product;
+import com.example.domain.entity.ProductBin;
 import com.example.domain.entity.User;
 import com.example.infrastructure.repository.UserRepository;
+import com.example.presentation.productbin.dto.quieries.ProductBinQuery;
 import com.example.presentation.user.dto.queries.UserQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,5 +53,12 @@ public class UserService {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public ProductBin putItemInAProductBinForUserWith(Long userId, Product product) {
+        User foundUser = userRepository.findById(userId).orElseThrow();
+        foundUser.getProductBin().getItems().add(product);
+        userRepository.save(foundUser);
+        return foundUser.getProductBin();
     }
 }

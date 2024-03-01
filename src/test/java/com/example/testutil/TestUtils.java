@@ -1,5 +1,6 @@
 package com.example.testutil;
 
+import com.example.domain.entity.User;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
@@ -16,6 +17,8 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static com.example.settings.Settings.ADD;
+import static com.example.settings.Settings.USERS_MAPPING;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class TestUtils {
@@ -50,9 +53,42 @@ public class TestUtils {
         }
     }
     
+    public static User userFromPostResult(ResultActions resultActions,
+                                          ObjectMapper jackson) {
+        try {
+            return jackson.readValue(
+                    resultActions.andReturn().getResponse().getContentAsString(),
+                    User.class
+            );
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public static CreateUserCommand getCreateUserCommand(String login) {
         return CreateUserCommand.builder()
                 .login(login)
                 .build();
+    }
+    
+    public static User postUserBy(String userName,
+                                  MockMvc usersMockMvc,
+                                  ObjectMapper jackson) {
+        String body = null;
+        try {
+            body = jackson.writeValueAsString(
+                    getCreateUserCommand("oleguito")
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return userFromPostResult(
+                postSomething(usersMockMvc, body, USERS_MAPPING + ADD),
+                jackson
+        );
     }
 }

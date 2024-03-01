@@ -1,5 +1,10 @@
 package com.example;
 
+import com.example.application.UserService;
+import com.example.domain.entity.Category;
+import com.example.domain.entity.User;
+import com.example.presentation.product.dto.command.CreateProductCommand;
+import com.example.settings.Settings;
 import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
@@ -39,7 +44,7 @@ public class UserControllerTests {
     private ObjectMapper jackson;
     
     private final String OLEGUITO = "oleguito";
-
+    
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
@@ -116,12 +121,31 @@ public class UserControllerTests {
     
     @Test
     void getUsersProductBin_listOfProducts() throws Exception {
-        mockMvc.perform(
-                get("/users/oleguito/product-bin"))
-               .andExpectAll(
+        mockMvc.perform(get( USERS_MAPPING + SLASH +
+                                            "oleguito" + SLASH + PRODUCT_BIN))
+        .andExpectAll(
             status().isOk(),
             jsonPath("$.items",
             hasSize(greaterThanOrEqualTo(0)))
+        );
+    }
+    
+    @Test
+    void putItemInAProductBin() throws Exception {
+        
+        final User postedUser = postUserBy("oleguito", mockMvc, jackson);
+        
+        final String body = jackson.writeValueAsString(
+                CreateProductCommand.builder()
+                        .title("bread")
+                        .category(Category.builder().title("foods").build())
+                        .build()
+        );
+        final String path = "/users/" + postedUser.getId() + "/product-bin/add";
+        
+        postSomething(mockMvc, body, path).andExpectAll(
+            status().isOk(),
+            jsonPath("$.items[0].title").value("bread")
         );
     }
     
