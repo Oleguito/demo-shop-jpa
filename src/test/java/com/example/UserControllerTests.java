@@ -119,7 +119,9 @@ public class UserControllerTests {
         mockMvc.perform(
                 get("/users/oleguito/product-bin"))
                .andExpectAll(
-            status().isOk()
+            status().isOk(),
+            jsonPath("$.items",
+            hasSize(greaterThanOrEqualTo(0)))
         );
     }
     
