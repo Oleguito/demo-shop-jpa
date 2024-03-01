@@ -101,8 +101,10 @@ public class UserControllerTests {
     
     @Test
     void deleteAUser() throws Exception {
-        ResultActions resultActions = postAUser(OLEGUITO);
-        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        final var oleguitoUserCommand
+                = allControllers.createUserCommand(OLEGUITO);
+        ResultActions resultActions = postAUser(oleguitoUserCommand);
+        UserQuery userQuery = userQueryfromPostResult(resultActions);
         
         mockMvc.perform(delete(USERS_MAPPING + "/delete/" + userQuery.getId()))
             .andExpectAll(
@@ -118,7 +120,7 @@ public class UserControllerTests {
     @Test
     void updateAUser() throws Exception {
         final var resultActions = postAUser(OLEGUITO);
-        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        UserQuery userQuery = userQueryfromPostResult(resultActions);
         
         UpdateUserCommand updateUserCommand = UpdateUserCommand.builder()
                 .login("tenzuro")
@@ -257,18 +259,21 @@ public class UserControllerTests {
                 = userController.putAnItemInAProductBin(postedUser.getId(),
                 productController.getMapper().toCommand(product)
         );
-        // List <Product> items = productBinQuery.getItems();
-        // int len = items.size();
-        // return items.get(len - 1);
         
     }
     
     @NotNull
-    private ResultActions postAUser(String login) throws JsonProcessingException {
+    public ResultActions postAUser(String login) throws JsonProcessingException {
         CreateUserCommand userCommand = getCreateUserCommand(login);
         final String body = jackson.writeValueAsString(userCommand);
         return postSomething(mockMvc, body, USERS_MAPPING + ADD);
     }
     
+    public ResultActions postAUser(CreateUserCommand userCommand)
+            throws JsonProcessingException {
+        
+        final String body = jackson.writeValueAsString(userCommand);
+        return postSomething(mockMvc, body, USERS_MAPPING + ADD);
+    }
     
 }

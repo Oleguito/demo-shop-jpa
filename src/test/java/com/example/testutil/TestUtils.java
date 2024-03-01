@@ -16,8 +16,11 @@ import static com.example.settings.Settings.ADD;
 import static com.example.settings.Settings.USERS_MAPPING;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+
 public class TestUtils {
 
+    private static final ObjectMapper jackson = new ObjectMapper();
+    
     public static ResultActions postSomething(
             MockMvc mockMvc,
             String body,
@@ -33,7 +36,7 @@ public class TestUtils {
         }
     }
     
-    public static UserQuery userQueryfromPostResult(ResultActions resultActions, ObjectMapper jackson) {
+    public static UserQuery userQueryfromPostResult(ResultActions resultActions) {
         try {
             return jackson.readValue(
                     resultActions.andReturn().getResponse().getContentAsString(),
