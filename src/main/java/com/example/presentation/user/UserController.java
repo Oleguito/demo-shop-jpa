@@ -93,7 +93,7 @@ public class UserController {
         );
     }
     
-    @PostMapping("/{userId}" + SLASH + PRODUCT_BIN_NO_SLASH + ADD)
+    @PostMapping("/{userId}" + PRODUCT_BIN + ADD)
     public ProductBinQuery putAnItemInAProductBin(
             @PathVariable Long userId,
             @RequestBody CreateProductCommand productCommand

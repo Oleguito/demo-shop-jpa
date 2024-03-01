@@ -10,7 +10,7 @@ public class PathReturners {
     
     public static String getPathToAddProductToAUsersProductBin(Long userId) {
         
-        return USERS_MAPPING + SLASH + userId + SLASH + PRODUCT_BIN_NO_SLASH + ADD;
+        return USERS_MAPPING + SLASH + userId + PRODUCT_BIN + ADD;
     }
     
     public static String getPathToDeleteProductFromAUsersProductBin(Long userId, Long productId) {
