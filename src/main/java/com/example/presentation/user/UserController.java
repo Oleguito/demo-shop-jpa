@@ -7,20 +7,16 @@ import com.example.application.mappers.UserMapper;
 import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
 import com.example.presentation.product.dto.command.CreateProductCommand;
-import com.example.presentation.product.dto.query.ProductQuery;
 import com.example.presentation.productbin.dto.quieries.ProductBinQuery;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.settings.Settings;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +73,7 @@ public class UserController {
         return userMapper.toUserQuery(updated);
     }
     
-    @GetMapping(path = "/{userName}/" + PRODUCT_BIN,
+    @GetMapping(path = "/{userName}/" + PRODUCT_BIN_NO_SLASH,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductBinQuery> getProductBinOfA(
             @PathVariable String userName
@@ -97,7 +93,7 @@ public class UserController {
         );
     }
     
-    @PostMapping("/{userId}" + SLASH + PRODUCT_BIN + ADD)
+    @PostMapping("/{userId}" + SLASH + PRODUCT_BIN_NO_SLASH + ADD)
     public ProductBinQuery putAnItemInAProductBin(
             @PathVariable Long userId,
             @RequestBody CreateProductCommand productCommand

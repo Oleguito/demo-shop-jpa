@@ -35,7 +35,9 @@ public class Settings {
     public static final String PURCHASES_MAPPING
             = "/purchases";
     
-    public static final String PRODUCT_BIN
+    public static final String PRODUCT_BIN_NO_SLASH
             = "product-bin";
     
+    public static final String PRODUCT_BIN
+            = "/product-bin";
 }
