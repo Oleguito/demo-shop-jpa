@@ -3,6 +3,7 @@ package com.example.testutil;
 import com.example.presentation.category.CategoryController;
 import com.example.presentation.product.ProductController;
 import com.example.presentation.user.UserController;
+import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,4 +25,7 @@ public class AllControllers {
     @Autowired
     private ObjectMapper jackson;
 
+    public CreateUserCommand createUserCommand(String userName) {
+        return CreateUserCommand.builder().login(userName).build();
+    }
 }

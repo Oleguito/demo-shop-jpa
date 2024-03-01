@@ -73,16 +73,15 @@ public class UserControllerTests {
     
     @Test
     void getAUserById() throws Exception {
-        // ResultActions resultActions = postAUser(OLEGUITO);
-        // UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
-        CreateUserCommand Oleguito = CreateUserCommand.builder().login(OLEGUITO).build();
+        CreateUserCommand Oleguito = allControllers.createUserCommand(OLEGUITO);
         UserQuery userQuery = allControllers.getUserController().postAUser(Oleguito);
         
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
             .andExpectAll(
             status().isOk(),
             jsonPath("$.login").exists(),
-            jsonPath("$.login").value(OLEGUITO)
+            jsonPath("$.login").value(OLEGUITO),
+            jsonPath("$.id").value(greaterThanOrEqualTo(1))
         );
     }
     
