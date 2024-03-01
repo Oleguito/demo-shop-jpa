@@ -1,21 +1,16 @@
 package com.example.testutil;
 
 import com.example.domain.entity.User;
-import com.example.presentation.category.dto.commands.CreateCategoryCommand;
-import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static com.example.settings.Settings.ADD;
 import static com.example.settings.Settings.USERS_MAPPING;
@@ -75,9 +70,9 @@ public class TestUtils {
                 .build();
     }
     
-    public static User postUserBy(String userName,
-                                  MockMvc usersMockMvc,
-                                  ObjectMapper jackson) {
+    public static User postAndReturnUser(String userName,
+                                         MockMvc usersMockMvc,
+                                         ObjectMapper jackson) {
         String body = null;
         try {
             body = jackson.writeValueAsString(

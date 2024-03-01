@@ -1,10 +1,8 @@
 package com.example;
 
-import com.example.application.UserService;
 import com.example.domain.entity.Category;
 import com.example.domain.entity.User;
 import com.example.presentation.product.dto.command.CreateProductCommand;
-import com.example.settings.Settings;
 import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
@@ -133,9 +131,11 @@ public class UserControllerTests {
     @Test
     void putItemInAProductBin() throws Exception {
         
-        final User postedUser = postUserBy("oleguito", mockMvc, jackson);
+        final User postedUser = postAndReturnUser("oleguito", mockMvc, jackson);
         final var productName = "bread";
         final var productCategory = "foods";
+        final String path = getPathToAddProductToAUsersProductBin(
+                    postedUser.getId());
         
         final String body = jackson.writeValueAsString(
                 CreateProductCommand.builder()
@@ -144,8 +144,6 @@ public class UserControllerTests {
                                 .title(productCategory).build())
                         .build()
         );
-        final String path
-            = getPathToAddProductToAUsersProductBin(postedUser.getId());
         
         postSomething(mockMvc, body, path).andExpectAll(
             status().isOk(),
