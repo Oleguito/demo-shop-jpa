@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 
+import static com.example.testutil.PathReturners.getPathToListProductsInAUsersProductBin;
 import static com.example.testutil.TestUtils.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -132,8 +133,12 @@ public class UserControllerTests {
     
     @Test
     void getUsersProductBin_listOfProducts() throws Exception {
+        
+        final User postedUser
+                = postAndReturnUser("oleguito", mockMvc, jackson);
+        
         mockMvc.perform(get( USERS_MAPPING + SLASH +
-                                            "oleguito" + SLASH + PRODUCT_BIN))
+                                            postedUser.getId() + SLASH + PRODUCT_BIN))
         .andExpectAll(
             status().isOk(),
             jsonPath("$.items",
@@ -175,6 +180,12 @@ public class UserControllerTests {
         
         removeProductFromProductBinOfAUser(product.getId(),
                                             user.getId()).andExpectAll(
+                status().isOk()
+        );
+        
+        mockMvc.perform(get(getPathToListProductsInAUsersProductBin(
+                user.getId()
+        ))).andExpectAll(
                 status().isOk()
         );
 
