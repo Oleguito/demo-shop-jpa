@@ -15,7 +15,7 @@ import static com.example.settings.Settings.*;
 @Entity
 @Getter
 @Setter
-@Table(name = PRODUCTS_TABLE_NAME)
+@Table(name = "products")
 public class Product {
     
     @Id

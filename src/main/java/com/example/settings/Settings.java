@@ -2,11 +2,11 @@ package com.example.settings;
 
 public class Settings {
     
-    public final static String CATEGORIES_TABLE_NAME
-            = "categories";
+    public static final String USERS_MAPPING
+            = "/users";
     
-    public static final String PRODUCTS_TABLE_NAME
-            = "products";
+    public static final String PURCHASES_MAPPING
+            = "/purchases";
     
     public static final String CATEGORIES
             = "/categories";
@@ -20,24 +20,12 @@ public class Settings {
     public static final String SLASH
             = "/";
     
-    public static final String ADD_CATEGORY_SLASH
-            = ADD_CATEGORY + SLASH;
-    
     public static final String DELETE_CATEGORY
             = "/delete";
     
-    public static final String USERS_MAPPING
-            = "/users";
-    
     public static final String ADD
             = "/add";
-    
-    public static final String PURCHASES_MAPPING
-            = "/purchases";
-    
-    public static final String PRODUCT_BIN_NO_SLASH
-            = "product-bin";
-    
+        
     public static final String PRODUCT_BIN
             = "/product-bin";
     

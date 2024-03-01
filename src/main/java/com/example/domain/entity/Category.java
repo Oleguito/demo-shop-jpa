@@ -15,7 +15,7 @@ import com.example.settings.Settings;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = Settings.CATEGORIES_TABLE_NAME)
+@Table(name = "categories")
 public class Category {
 
     @Id
