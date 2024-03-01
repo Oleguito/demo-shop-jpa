@@ -11,6 +11,7 @@ import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
+import com.example.testutil.AllControllers;
 import com.example.testutil.PathReturners;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,6 +53,9 @@ public class UserControllerTests {
     @Autowired
     private ObjectMapper jackson;
     
+    @Autowired
+    private AllControllers allControllers;
+    
     private final String OLEGUITO = "oleguito";
     
     @BeforeEach
@@ -69,8 +73,10 @@ public class UserControllerTests {
     
     @Test
     void getAUserById() throws Exception {
-        ResultActions resultActions = postAUser(OLEGUITO);
-        UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        // ResultActions resultActions = postAUser(OLEGUITO);
+        // UserQuery userQuery = userQueryfromPostResult(resultActions, jackson);
+        CreateUserCommand Oleguito = CreateUserCommand.builder().login(OLEGUITO).build();
+        UserQuery userQuery = allControllers.getUserController().postAUser(Oleguito);
         
         mockMvc.perform(get(USERS_MAPPING + "/" + userQuery.getId()))
             .andExpectAll(
