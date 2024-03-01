@@ -26,8 +26,5 @@ public class Product {
     
     @ManyToOne
     private Category category;
-    
-    public String getCategoryTitle() {
-        return getCategory().getTitle();
-    }
+
 }

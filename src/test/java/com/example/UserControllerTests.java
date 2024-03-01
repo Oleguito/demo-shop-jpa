@@ -156,24 +156,24 @@ public class UserControllerTests {
         );
     }
     
-    // @Test
-    // void removeItemFromUsersProductBin() throws Exception {
-    //     final User postedUser
-    //             = postAndReturnUser("oleguito", mockMvc, jackson);
-    //     Product product
-    //             = createProductFromTitleAndCategoryTitle(
-    //             "bread", "foods");
-    //
-    //     Product returnedProduct
-    //             = addProductToProductBinOfUser(product, postedUser);
-    //
-    //     mockMvc.perform(delete(
-    //             getPathToDeleteProductFromAUsersProductBin(
-    //                     postedUser.getId(), returnedProduct.getId())
-    //     )).andExpectAll(
-    //             status().isOk()
-    //     );
-    // }
+    @Test
+    void removeItemFromUsersProductBin() throws Exception {
+        // final User postedUser
+        //         = postAndReturnUser("oleguito", mockMvc, jackson);
+        // Product product
+        //         = createProductFromTitleAndCategoryTitle(
+        //         "bread", "foods");
+        //
+        // Product returnedProduct
+        //         = addProductToProductBinOfUser(product, postedUser);
+        //
+        // mockMvc.perform(delete(
+        //         getPathToDeleteProductFromAUsersProductBin(
+        //                 postedUser.getId(), returnedProduct.getId())
+        // )).andExpectAll(
+        //         status().isOk()
+        // );
+    }
     
     Product createProductFromTitleAndCategoryTitle(String productTitle, String categoryTitle) {
         return Product.builder()
@@ -192,16 +192,18 @@ public class UserControllerTests {
             CreateProductCommand.builder()
                     .title(product.getTitle())
                     .category(Category.builder()
-                            .title(product.getCategoryTitle()).build())
+                            .title(product.getCategory().getTitle()).build())
                     .build()
             );
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+        
         ResultActions resultActions = postSomething(mockMvc, body, path);
-        ProductBinQuery result = null;
+        ProductBinQuery productBinResult = null;
+
         try {
-            result = jackson.readValue(
+            productBinResult = jackson.readValue(
                     resultActions.andReturn().getResponse().getContentAsString(),
                     ProductBinQuery.class
             );
@@ -210,8 +212,8 @@ public class UserControllerTests {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        int length = result.getItems().size();
-        return result.getItems().get(length - 1);
+        int length = productBinResult.getItems().size();
+        return productBinResult.getItems().get(length - 1);
     }
     
     @NotNull
