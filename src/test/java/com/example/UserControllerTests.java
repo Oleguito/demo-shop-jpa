@@ -45,10 +45,10 @@ public class UserControllerTests {
     private UserController userController;
     
     @Autowired
-    ProductController productController;
+    private ProductController productController;
     
     @Autowired
-    CategoryController categoryController;
+    private CategoryController categoryController;
 
     @Autowired
     private ObjectMapper jackson;
