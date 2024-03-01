@@ -1,11 +1,11 @@
 package com.example.presentation.category.dto.commands;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateCategoryCommand {
     
     String title;

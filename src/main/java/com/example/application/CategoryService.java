@@ -34,5 +34,9 @@ public class CategoryService {
     public Category findByTitle(String categoryTitle) {
         return categoryRepository.findByTitle(categoryTitle);
     }
+    
+    public Category findById(Long categoryId) {
+        return categoryRepository.findById(categoryId).orElseThrow();
+    }
 }
 

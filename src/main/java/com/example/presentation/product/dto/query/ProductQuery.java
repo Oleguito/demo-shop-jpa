@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class ProductQuery {
 
+    private Long id;
+    
     private String title;
     
     private Category category;

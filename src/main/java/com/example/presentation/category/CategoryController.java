@@ -40,14 +40,14 @@ public class CategoryController {
         ).collect(Collectors.toList());
     }
     
-    @GetMapping("/{" + CATEGORY_TITLE_VAR + "}")
-    public CategoryQuery getCategoryByName(@PathVariable String categoryTitle) {
-        var category =  categoryService.findByTitle(categoryTitle);
-        return category == null
-                ? new CategoryQuery()
-                : modelMapper.map(category,
-                CategoryQuery.class);
-    }
+    // @GetMapping("/{" + CATEGORY_TITLE_VAR + "}")
+    // public CategoryQuery getCategoryByName(@PathVariable String categoryTitle) {
+    //     var category =  categoryService.findByTitle(categoryTitle);
+    //     return category == null
+    //             ? new CategoryQuery()
+    //             : modelMapper.map(category,
+    //             CategoryQuery.class);
+    // }
     
     @PostMapping(ADD_CATEGORY)
     public CategoryQuery addCategory(@RequestBody CreateCategoryCommand command) {
@@ -73,4 +73,13 @@ public class CategoryController {
                 categoryService.findByTitle(categoryTitle));
     }
     
+    @GetMapping("/{categoryId}")
+    public CategoryQuery findCategoryById(@PathVariable Long categoryId) {
+        Category category = categoryService.findById(categoryId);
+        return categoryMapper.categoryToQuery(category);
+    }
+    
+    public CategoryMapper getMapper() {
+        return categoryMapper;
+    }
 }

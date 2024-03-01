@@ -1,6 +1,7 @@
 package com.example.presentation.product;
 
 import com.example.application.ProductService;
+import com.example.application.mappers.ProductMapper;
 import com.example.domain.entity.Product;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.product.dto.query.ProductQuery;
@@ -20,6 +21,8 @@ public class ProductController {
     
     private ModelMapper modelMapper;
     
+    private ProductMapper productMapper;
+    
     @GetMapping("/all")
     public List <ProductQuery> getAllProductsREST() {
         return productService.findAll().stream().map(
@@ -37,6 +40,9 @@ public class ProductController {
         return modelMapper.map(product, ProductQuery.class);
     }
     
+    public ProductMapper getMapper() {
+        return productMapper;
+    }
 }
 
 

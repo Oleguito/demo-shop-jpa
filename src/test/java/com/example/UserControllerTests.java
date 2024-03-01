@@ -3,6 +3,9 @@ package com.example;
 import com.example.domain.entity.Category;
 import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
+import com.example.presentation.category.CategoryController;
+import com.example.presentation.category.dto.commands.CreateCategoryCommand;
+import com.example.presentation.product.ProductController;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.productbin.dto.quieries.ProductBinQuery;
 import com.example.presentation.user.UserController;
@@ -41,6 +44,12 @@ public class UserControllerTests {
 
     @Autowired
     private UserController userController;
+    
+    @Autowired
+    ProductController productController;
+    
+    @Autowired
+    CategoryController categoryController;
 
     @Autowired
     private ObjectMapper jackson;
@@ -158,21 +167,53 @@ public class UserControllerTests {
     
     @Test
     void removeItemFromUsersProductBin() throws Exception {
-        // final User postedUser
-        //         = postAndReturnUser("oleguito", mockMvc, jackson);
-        // Product product
-        //         = createProductFromTitleAndCategoryTitle(
-        //         "bread", "foods");
-        //
-        // Product returnedProduct
-        //         = addProductToProductBinOfUser(product, postedUser);
-        //
-        // mockMvc.perform(delete(
-        //         getPathToDeleteProductFromAUsersProductBin(
-        //                 postedUser.getId(), returnedProduct.getId())
-        // )).andExpectAll(
+        
+        User user = createAUser("oleguito");
+        Category category = createCategory("foods");
+        Product product = createAProduct("bread", category.getId());
+        addProductToProductBinOfUser(product, user);
+        
+        // TODO
+        
+        // removeProductFromProductBinOfAUser(product, user).andExpectAll(
         //         status().isOk()
         // );
+
+    }
+    
+    private Category createCategory(String categoryTitle) {
+        final var categoryCommand
+                = CreateCategoryCommand.builder()
+                .title(categoryTitle)
+                .build();
+        return categoryController.getMapper().toCategory(
+                categoryController.addCategory(categoryCommand)
+        );
+    }
+    
+    User createAUser(String userName) {
+        final User postedUser
+                = postAndReturnUser(userName, mockMvc, jackson);
+        return postedUser;
+    }
+    
+    Product createAProduct(String title, Long categoryId) {
+        
+        final var newProductCommand
+                = CreateProductCommand.builder()
+                .title(title)
+                .category(getCategoryFromId(categoryId))
+                .build();
+        
+        return productController.getMapper().toProduct(
+               productController.createProductREST(newProductCommand)
+        );
+    }
+    
+    private Category getCategoryFromId(Long categoryId) {
+        return categoryController.getMapper().toCategory(
+                categoryController.findCategoryById(categoryId)
+        );
     }
     
     Product createProductFromTitleAndCategoryTitle(String productTitle, String categoryTitle) {

@@ -2,6 +2,7 @@ package com.example;
 import com.example.domain.entity.Category;
 import com.example.presentation.category.CategoryController;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
+import com.example.presentation.category.dto.queries.CategoryQuery;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,9 +64,13 @@ public class CategoryControllerTests {
         final String foods = "foods";
         final var categoryCommand
                 = createCategoryCommand(foods);
-        postCategoryCommand(categoryCommand);
+        ResultActions resultActions = postCategoryCommand(categoryCommand);
+        final CategoryQuery gottenCategory = jackson.readValue(
+                resultActions.andReturn().getResponse().getContentAsString(),
+                CategoryQuery.class
+        );
         
-        mockMvc.perform(get( CATEGORIES + "/" + foods)).andExpectAll(
+        mockMvc.perform(get( CATEGORIES + "/" + gottenCategory.getId())).andExpectAll(
                 status().isOk(),
                 jsonPath("$[?(@.title == '" + foods + "')]").exists()
         );

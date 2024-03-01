@@ -13,5 +13,7 @@ public interface CategoryMapper {
     public Category createCommandToCategory(CreateCategoryCommand command);
     
     public CategoryQuery categoryToQuery(Category category);
+    
+    public Category toCategory(CategoryQuery categoryQuery);
 
 }

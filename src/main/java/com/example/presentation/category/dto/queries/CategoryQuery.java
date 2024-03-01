@@ -4,7 +4,9 @@ import lombok.Data;
 
 @Data
 public class CategoryQuery {
-
+    
+    Long id;
+    
     String title;
 
 }
