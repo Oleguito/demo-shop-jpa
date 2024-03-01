@@ -73,12 +73,12 @@ public class UserController {
         return userMapper.toUserQuery(updated);
     }
     
-    @GetMapping(path = "/{userName}" + PRODUCT_BIN,
+    @GetMapping(path = "/{userId}" + PRODUCT_BIN,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductBinQuery> getProductBinOfA(
-            @PathVariable String userName
+            @PathVariable Long userId
     ) {
-        log.info("\n\nuserName: {}\n", userName);
+        log.info("\n\nuserId: {}\n", userId);
         ProductBinQuery productBinQuery = new ProductBinQuery();
         return ResponseEntity.ok(productBinQuery);
     }

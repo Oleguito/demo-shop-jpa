@@ -145,7 +145,7 @@ public class UserControllerTests {
                 = postAndReturnUser("oleguito", mockMvc, jackson);
         
         mockMvc.perform(get( USERS_MAPPING + SLASH +
-                                            postedUser.getId() + SLASH + PRODUCT_BIN_NO_SLASH))
+                            postedUser.getId() + SLASH + PRODUCT_BIN_NO_SLASH))
         .andExpectAll(
             status().isOk(),
             jsonPath("$.items",
