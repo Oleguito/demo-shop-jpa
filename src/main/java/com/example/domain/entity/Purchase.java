@@ -4,6 +4,8 @@ import com.example.domain.valueobject.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Builder
 @Entity
@@ -17,7 +19,6 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
-    User user;
-    
+    @OneToMany
+    List <Product> products;
 }

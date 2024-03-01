@@ -12,6 +12,6 @@ import java.util.List;
 public interface PurchaseRepository
         extends JpaRepository<Purchase, Long> {
     
-    List <Purchase> getPurchasesByUser(User user);
+    //List <Purchase> getPurchasesByUser(User user);
     
 }

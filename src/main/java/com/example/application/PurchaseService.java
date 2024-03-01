@@ -14,8 +14,8 @@ public class PurchaseService {
 
     private final PurchaseRepository purchaseRepository;
     
-    public List <Purchase> getPurchasesBy(User user) {
-        return purchaseRepository.getPurchasesByUser(user);
-    }
+    // public List <Purchase> getPurchasesBy(User user) {
+    //     return purchaseRepository.getPurchasesByUser(user);
+    // }
 
 }

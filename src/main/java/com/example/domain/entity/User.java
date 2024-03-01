@@ -22,8 +22,7 @@ public class User {
     
     String login;
     
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    //@JoinColumn(table = "purchase", name = "user_id")
+    @OneToMany
     private List<Purchase> purchases;
 
 }
