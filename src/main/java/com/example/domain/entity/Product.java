@@ -9,6 +9,7 @@ import java.util.List;
 import static com.example.settings.Settings.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,4 +26,8 @@ public class Product {
     
     @ManyToOne
     private Category category;
+    
+    public String getCategoryTitle() {
+        return getCategory().getTitle();
+    }
 }

@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.domain.entity.Category;
+import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.user.UserController;
@@ -150,6 +151,46 @@ public class UserControllerTests {
             jsonPath("$.items[0].title").value(productName),
             jsonPath("$.items[0].category.title").value(productCategory)
         );
+    }
+    
+    @Test
+    void removeItemFromUsersProductBin() throws Exception {
+        final User postedUser = postAndReturnUser("oleguito", mockMvc, jackson);
+        Product product = createProductFromTitleAndCategoryTitle(
+                "bread", "foods");
+
+        addProductToProductBinOfUser(product, postedUser);
+        
+        
+        mockMvc.perform(delete("")).andExpectAll(
+                // status().isOk()
+        );
+    }
+    
+    Product createProductFromTitleAndCategoryTitle(String productTitle, String categoryTitle) {
+        return Product.builder()
+                .title(productTitle)
+                .category(Category.builder().title(categoryTitle).build())
+                .build();
+    }
+    
+    private void addProductToProductBinOfUser(Product product,
+                                              User postedUser) {
+        final String path = getPathToAddProductToAUsersProductBin(
+                    postedUser.getId());
+        String body = "";
+        try {
+            body = jackson.writeValueAsString(
+            CreateProductCommand.builder()
+                    .title(product.getTitle())
+                    .category(Category.builder()
+                            .title(product.getCategoryTitle()).build())
+                    .build()
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        postSomething(mockMvc, body, path);
     }
     
     @NotNull
