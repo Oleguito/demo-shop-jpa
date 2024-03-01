@@ -61,4 +61,16 @@ public class UserService {
         userRepository.save(foundUser);
         return foundUser.getProductBin();
     }
+    
+    public void removeItemFromAProductBinForAUser(Long userId, Long productId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        final var items = user.getProductBin().getItems();
+        for (Product item : items) {
+            if(item.getId().equals(productId)) {
+                items.remove(item);
+                break;
+            }
+        }
+        userRepository.save(user);
+    }
 }

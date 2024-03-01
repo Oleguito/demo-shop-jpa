@@ -88,6 +88,7 @@ public class TestUtils {
     }
     
     public static String getPathToAddProductToAUsersProductBin(Long userId) {
+        
         return "/users/" + userId + "/product-bin/add";
     }
     

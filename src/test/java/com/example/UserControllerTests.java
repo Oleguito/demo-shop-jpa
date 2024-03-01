@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import static com.example.testutil.PathReturners.getPathToListProductsInAUsersProductBin;
 import static com.example.testutil.TestUtils.*;
@@ -178,6 +179,7 @@ public class UserControllerTests {
         Product product = createAProduct("bread", category.getId());
         addProductToProductBinOfUser(product, user);
         
+        
         removeProductFromProductBinOfAUser(product.getId(),
                                             user.getId()).andExpectAll(
                 status().isOk()
@@ -188,7 +190,11 @@ public class UserControllerTests {
         ))).andExpectAll(
                 status().isOk()
         );
-
+        
+        mockMvc.perform(get(getPathToListProductsInAUsersProductBin(user.getId())))
+                .andExpectAll(
+                        status().isOk()
+                );
     }
     
     private ResultActions removeProductFromProductBinOfAUser(
@@ -242,38 +248,17 @@ public class UserControllerTests {
                 .build();
     }
     
-    private Product addProductToProductBinOfUser(Product product,
+    private void addProductToProductBinOfUser(Product product,
                                               User postedUser) {
-        final String path = getPathToAddProductToAUsersProductBin(
-                    postedUser.getId());
-        String body = "";
-        try {
-            body = jackson.writeValueAsString(
-            CreateProductCommand.builder()
-                    .title(product.getTitle())
-                    .category(Category.builder()
-                            .title(product.getCategory().getTitle()).build())
-                    .build()
-            );
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        
-        ResultActions resultActions = postSomething(mockMvc, body, path);
-        ProductBinQuery productBinResult = null;
 
-        try {
-            productBinResult = jackson.readValue(
-                    resultActions.andReturn().getResponse().getContentAsString(),
-                    ProductBinQuery.class
-            );
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-        int length = productBinResult.getItems().size();
-        return productBinResult.getItems().get(length - 1);
+        final var productBinQuery
+                = userController.putAnItemInAProductBin(postedUser.getId(),
+                productController.getMapper().toCommand(product)
+        );
+        // List <Product> items = productBinQuery.getItems();
+        // int len = items.size();
+        // return items.get(len - 1);
+        
     }
     
     @NotNull

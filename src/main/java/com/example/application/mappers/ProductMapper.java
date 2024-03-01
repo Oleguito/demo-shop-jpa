@@ -13,4 +13,6 @@ public interface ProductMapper {
     ProductQuery toQuery(Product product);
     
     Product toProduct(ProductQuery query);
+    
+    CreateProductCommand toCommand(Product product);
 }

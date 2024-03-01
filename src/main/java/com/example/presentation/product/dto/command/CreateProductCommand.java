@@ -14,6 +14,8 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateProductCommand {
     
+    Long id;
+    
     String title;
     
     Category category;
