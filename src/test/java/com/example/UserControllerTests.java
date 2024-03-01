@@ -4,6 +4,7 @@ import com.example.domain.entity.Category;
 import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
 import com.example.presentation.product.dto.command.CreateProductCommand;
+import com.example.presentation.productbin.dto.quieries.ProductBinQuery;
 import com.example.presentation.user.UserController;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.commands.UpdateUserCommand;
@@ -155,24 +156,24 @@ public class UserControllerTests {
         );
     }
     
-    // @Test
-    // void removeItemFromUsersProductBin() throws Exception {
-    //     final User postedUser
-    //             = postAndReturnUser("oleguito", mockMvc, jackson);
-    //     Product product
-    //             = createProductFromTitleAndCategoryTitle(
-    //             "bread", "foods");
-    //
-    //     Product returnedProduct
-    //             = addProductToProductBinOfUser(product, postedUser);
-    //
-    //     mockMvc.perform(delete(
-    //             getPathToDeleteProductFromAUsersProductBin(
-    //                     postedUser.getId(), returnedProduct.getId())
-    //     )).andExpectAll(
-    //             status().isOk()
-    //     );
-    // }
+    @Test
+    void removeItemFromUsersProductBin() throws Exception {
+        final User postedUser
+                = postAndReturnUser("oleguito", mockMvc, jackson);
+        Product product
+                = createProductFromTitleAndCategoryTitle(
+                "bread", "foods");
+
+        Product returnedProduct
+                = addProductToProductBinOfUser(product, postedUser);
+
+        mockMvc.perform(delete(
+                getPathToDeleteProductFromAUsersProductBin(
+                        postedUser.getId(), returnedProduct.getId())
+        )).andExpectAll(
+                status().isOk()
+        );
+    }
     
     Product createProductFromTitleAndCategoryTitle(String productTitle, String categoryTitle) {
         return Product.builder()
@@ -191,25 +192,28 @@ public class UserControllerTests {
             CreateProductCommand.builder()
                     .title(product.getTitle())
                     .category(Category.builder()
-                            .title(product.getCategoryTitle()).build())
+                            .title(product.getCategory().getTitle()).build())
                     .build()
             );
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+        
         ResultActions resultActions = postSomething(mockMvc, body, path);
-        Product result = null;
+        ProductBinQuery productBinResult = null;
         try {
-            result = jackson.readValue(
+            productBinResult = jackson.readValue(
                     resultActions.andReturn().getResponse().getContentAsString(),
-                    Product.class
+                    ProductBinQuery.class
             );
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        return result;
+        
+        int length = productBinResult.getItems().size();
+        return productBinResult.getItems().get(length - 1);
     }
     
     @NotNull
