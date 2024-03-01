@@ -140,10 +140,12 @@ public class UserControllerTests {
         final String body = jackson.writeValueAsString(
                 CreateProductCommand.builder()
                         .title(productName)
-                        .category(Category.builder().title(productCategory).build())
+                        .category(Category.builder()
+                                .title(productCategory).build())
                         .build()
         );
-        final String path = "/users/" + postedUser.getId() + "/product-bin/add";
+        final String path
+            = getPathToAddProductToAUsersProductBin(postedUser.getId());
         
         postSomething(mockMvc, body, path).andExpectAll(
             status().isOk(),

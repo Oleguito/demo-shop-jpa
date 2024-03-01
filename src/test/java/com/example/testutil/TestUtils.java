@@ -91,4 +91,8 @@ public class TestUtils {
                 jackson
         );
     }
+    
+    public static String getPathToAddProductToAUsersProductBin(Long userId) {
+        return "/users/" + userId + "/product-bin/add";
+    }
 }
