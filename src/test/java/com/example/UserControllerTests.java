@@ -38,7 +38,6 @@ import static com.example.settings.Settings.*;
 @Rollback
 public class UserControllerTests {
 
-
     private MockMvc mockMvc;
 
     @Autowired
