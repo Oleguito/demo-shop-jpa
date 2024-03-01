@@ -96,6 +96,7 @@ public class UserController {
                 = productMapper.fromCommand(productCommand);
         final var newBin
                 = userService.putItemInAProductBinForUserWith(userId, fromCommand);
-        return productBinMapper.toQuery(newBin);
+        ProductBinQuery query = productBinMapper.toQuery(newBin);
+        return query;
     }
 }

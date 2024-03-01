@@ -134,18 +134,21 @@ public class UserControllerTests {
     void putItemInAProductBin() throws Exception {
         
         final User postedUser = postUserBy("oleguito", mockMvc, jackson);
+        final var productName = "bread";
+        final var productCategory = "foods";
         
         final String body = jackson.writeValueAsString(
                 CreateProductCommand.builder()
-                        .title("bread")
-                        .category(Category.builder().title("foods").build())
+                        .title(productName)
+                        .category(Category.builder().title(productCategory).build())
                         .build()
         );
         final String path = "/users/" + postedUser.getId() + "/product-bin/add";
         
         postSomething(mockMvc, body, path).andExpectAll(
             status().isOk(),
-            jsonPath("$.items[0].title").value("bread")
+            jsonPath("$.items[0].title").value(productName),
+            jsonPath("$.items[0].category.title").value(productCategory)
         );
     }
     
