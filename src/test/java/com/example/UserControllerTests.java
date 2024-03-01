@@ -88,7 +88,8 @@ public class UserControllerTests {
     
     @Test
     void addUser() throws Exception {
-        CreateUserCommand userCommand = getCreateUserCommand(OLEGUITO);
+        CreateUserCommand userCommand
+                = allControllers.createUserCommand(OLEGUITO);
         final String body = jackson.writeValueAsString(userCommand);
 
         postSomething(mockMvc, body, USERS_MAPPING + ADD)
