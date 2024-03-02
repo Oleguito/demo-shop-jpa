@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.services.purchase;
 
 import com.example.domain.entity.Purchase;
 import com.example.domain.entity.User;

@@ -1,34 +1,21 @@
 package com.example;
 
-import com.example.application.mappers.UserMapper;
+import com.example.application.services.user.mapper.UserMapper;
 import com.example.domain.entity.Purchase;
-import com.example.domain.entity.User;
 import com.example.presentation.purchase.PurchaseController;
-import com.example.presentation.purchase.dto.commands.CreatePurchaseCommand;
 import com.example.presentation.user.UserController;
-import com.example.presentation.user.dto.commands.CreateUserCommand;
-import com.example.presentation.user.dto.queries.UserQuery;
-import com.example.settings.Settings;
-import com.example.testutil.TestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.settings.Settings.*;
-import static com.example.testutil.TestUtils.*;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = ShopApplication.class)
 @Transactional

@@ -1,12 +1,7 @@
 package com.example.domain.entity;
 
-import com.example.settings.Settings;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
-
-import static com.example.settings.Settings.*;
 
 @Data
 @Builder

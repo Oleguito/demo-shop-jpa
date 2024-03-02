@@ -1,15 +1,14 @@
 package com.example.presentation.category;
 
-import com.example.application.CategoryService;
-import com.example.application.mappers.CategoryMapper;
-import com.example.application.mappers.ProductMapper;
+import com.example.application.services.category.CategoryService;
+import com.example.application.services.category.mapper.CategoryMapper;
+import com.example.application.services.product.mapper.ProductMapper;
 import com.example.domain.entity.Category;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
 import com.example.presentation.category.dto.queries.CategoryQuery;
 import com.example.presentation.product.ProductController;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.product.dto.query.ProductQuery;
-import com.example.settings.Settings;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.settings.Settings.*;
+import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
 @RequestMapping(CATEGORIES)

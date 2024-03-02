@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.io.UnsupportedEncodingException;
 
-import static com.example.settings.Settings.ADD;
-import static com.example.settings.Settings.USERS_MAPPING;
+import static com.example.infrastructure.settings.Settings.ADD;
+import static com.example.infrastructure.settings.Settings.USERS_MAPPING;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 

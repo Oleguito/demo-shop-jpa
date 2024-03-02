@@ -1,4 +1,4 @@
-package com.example.application.mappers;
+package com.example.application.services.category.mapper;
 
 import com.example.domain.entity.Category;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;

@@ -1,4 +1,4 @@
-package com.example.application.mappers;
+package com.example.application.services.purchase.mapper;
 
 import com.example.domain.entity.Purchase;
 import com.example.presentation.purchase.dto.commands.CreatePurchaseCommand;

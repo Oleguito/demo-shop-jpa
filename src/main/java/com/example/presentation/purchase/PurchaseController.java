@@ -1,22 +1,14 @@
 package com.example.presentation.purchase;
 
-import com.example.settings.Settings;
-import com.example.application.PurchaseService;
-import com.example.application.UserService;
-import com.example.application.mappers.PurchaseMapper;
-import com.example.domain.entity.Purchase;
-import com.example.domain.entity.User;
+import com.example.application.services.purchase.PurchaseService;
+import com.example.application.services.user.UserService;
+import com.example.application.services.purchase.mapper.PurchaseMapper;
 import com.example.presentation.purchase.dto.commands.CreatePurchaseCommand;
 import com.example.presentation.purchase.dto.queries.PurchaseQuery;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.settings.Settings.*;
+import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
 @AllArgsConstructor

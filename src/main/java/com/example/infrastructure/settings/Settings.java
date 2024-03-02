@@ -1,4 +1,4 @@
-package com.example.settings;
+package com.example.infrastructure.settings;
 
 public class Settings {
     

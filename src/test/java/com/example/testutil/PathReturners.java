@@ -1,6 +1,6 @@
 package com.example.testutil;
 
-import static com.example.settings.Settings.*;
+import static com.example.infrastructure.settings.Settings.*;
 
 public class PathReturners {
 

@@ -1,4 +1,4 @@
-package com.example.application.mappers;
+package com.example.application.services.product.mapper;
 
 import com.example.domain.entity.Product;
 import com.example.presentation.product.dto.command.CreateProductCommand;

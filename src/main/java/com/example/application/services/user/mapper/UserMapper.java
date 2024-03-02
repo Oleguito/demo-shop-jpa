@@ -1,4 +1,4 @@
-package com.example.application.mappers;
+package com.example.application.services.user.mapper;
 
 import com.example.domain.entity.User;
 import com.example.presentation.user.dto.commands.CreateUserCommand;

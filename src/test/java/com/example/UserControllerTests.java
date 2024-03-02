@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.settings.Settings;
+import com.example.infrastructure.settings.Settings;
 import com.example.domain.entity.Category;
 import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
@@ -35,7 +35,7 @@ import static com.example.testutil.TestUtils.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
-import static com.example.settings.Settings.*;
+import static com.example.infrastructure.settings.Settings.*;
 
 @SpringBootTest(classes = ShopApplication.class)
 @Transactional

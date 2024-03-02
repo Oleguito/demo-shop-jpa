@@ -1,16 +1,12 @@
 package com.example;
 
-import com.example.application.CategoryService;
+import com.example.application.services.category.CategoryService;
 import com.example.domain.entity.Category;
-import com.example.infrastructure.repository.CategoryRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 

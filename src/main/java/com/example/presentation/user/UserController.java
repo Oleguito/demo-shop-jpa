@@ -1,9 +1,9 @@
 package com.example.presentation.user;
 
-import com.example.application.UserService;
+import com.example.application.services.user.UserService;
 import com.example.application.mappers.ProductBinMapper;
-import com.example.application.mappers.ProductMapper;
-import com.example.application.mappers.UserMapper;
+import com.example.application.services.product.mapper.ProductMapper;
+import com.example.application.services.user.mapper.UserMapper;
 import com.example.domain.entity.Product;
 import com.example.domain.entity.User;
 import com.example.presentation.product.dto.command.CreateProductCommand;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.settings.Settings.*;
+import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
 @AllArgsConstructor

@@ -1,7 +1,7 @@
 package com.example.presentation.product;
 
-import com.example.application.ProductService;
-import com.example.application.mappers.ProductMapper;
+import com.example.application.services.product.ProductService;
+import com.example.application.services.product.mapper.ProductMapper;
 import com.example.domain.entity.Product;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.example.presentation.product.dto.query.ProductQuery;
