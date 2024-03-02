@@ -78,7 +78,7 @@ public class CategoryControllerTests {
     
     @Test
     void deleteCategoryREST() throws Exception {
-       final String magazines = "magazines";
+        final String magazines = "magazines";
         CreateCategoryCommand categoryCommand = createCategoryCommand(magazines);
         postCategoryCommand(categoryCommand);
         

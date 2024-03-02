@@ -1,5 +1,7 @@
 package com.example.presentation.user;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import com.example.application.services.user.UserService;
 import com.example.application.mappers.ProductBinMapper;
 import com.example.application.services.product.mapper.ProductMapper;
@@ -15,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +27,9 @@ import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(
-        value = USERS_MAPPING)
+@RequestMapping(value = USERS_MAPPING)
 @Slf4j
+@Validated
 public class UserController {
     
     private UserService userService;
@@ -43,15 +46,15 @@ public class UserController {
     }
     
     @GetMapping("/{id}")
-    public UserQuery getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserQuery> getUserById(@PathVariable Long id) {
         final var user = userService.getUserById(id);
         return user.isEmpty()
-                ? new UserQuery()
-                : userMapper.toUserQuery(user.get());
+                ? ResponseEntity.ok(new UserQuery())
+                : ResponseEntity.ok(userMapper.toUserQuery(user.get()));
     }
     
     @PostMapping("/add")
-    public UserQuery postAUser(@RequestBody CreateUserCommand userCommand) {
+    public UserQuery postAUser(@RequestBody @Valid CreateUserCommand userCommand) {
         User fromCommand = userMapper.toUser(userCommand);
         User user = userService.addUser(fromCommand);
         UserQuery userQuery = userMapper.toUserQuery(user);

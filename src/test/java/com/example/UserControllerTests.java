@@ -17,7 +17,6 @@ import com.example.testutil.Crude;
 import com.example.testutil.PathReturners;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -264,7 +263,6 @@ public class UserControllerTests {
         
     }
     
-    @NotNull
     public ResultActions postAUser(String login) throws JsonProcessingException {
         CreateUserCommand userCommand = getCreateUserCommand(login);
         final String body = jackson.writeValueAsString(userCommand);

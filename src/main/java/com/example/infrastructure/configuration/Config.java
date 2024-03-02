@@ -8,6 +8,7 @@ import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 public class Config {
@@ -25,4 +26,9 @@ public class Config {
     
     @Bean
     public ObjectMapper jackson() {return new ObjectMapper(); }
+    
+    // @Bean
+    // public LocalValidatorFactoryBean validator() {
+    //     return new LocalValidatorFactoryBean();
+    // }
 }

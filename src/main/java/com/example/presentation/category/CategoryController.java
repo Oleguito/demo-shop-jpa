@@ -39,15 +39,6 @@ public class CategoryController {
         ).collect(Collectors.toList());
     }
     
-    // @GetMapping("/{" + CATEGORY_TITLE_VAR + "}")
-    // public CategoryQuery getCategoryByName(@PathVariable String categoryTitle) {
-    //     var category =  categoryService.findByTitle(categoryTitle);
-    //     return category == null
-    //             ? new CategoryQuery()
-    //             : modelMapper.map(category,
-    //             CategoryQuery.class);
-    // }
-    
     @PostMapping(ADD_CATEGORY)
     public CategoryQuery addCategory(@RequestBody CreateCategoryCommand command) {
         Category fromCommand =

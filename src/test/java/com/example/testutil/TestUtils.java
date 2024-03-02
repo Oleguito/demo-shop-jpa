@@ -1,5 +1,6 @@
 package com.example.testutil;
 
+import com.example.domain.entity.ProductBin;
 import com.example.domain.entity.User;
 import com.example.presentation.user.dto.commands.CreateUserCommand;
 import com.example.presentation.user.dto.queries.UserQuery;
@@ -68,9 +69,10 @@ public class TestUtils {
     }
     
     public static CreateUserCommand getCreateUserCommand(String login) {
-        return CreateUserCommand.builder()
+        var user = CreateUserCommand.builder()
                 .login(login)
                 .build();
+        return user;
     }
     
     public static User postAndReturnUser(String userName,

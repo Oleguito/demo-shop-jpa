@@ -2,6 +2,9 @@ package com.example.domain.entity;
 
 import com.example.domain.valueobject.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -20,9 +23,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
+    @NotEmpty
     String login;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private final ProductBin productBin = new ProductBin();
     
     @OneToMany
