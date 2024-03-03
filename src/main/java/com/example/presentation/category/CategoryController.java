@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
-@RequestMapping(CATEGORIES)
+@RequestMapping("/categories")
 @AllArgsConstructor
 public class CategoryController {
     
