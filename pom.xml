@@ -96,8 +96,7 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
+        <plugins>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -112,7 +111,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
                     <configuration>
@@ -149,7 +147,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.2.5</version>
                     <configuration>
@@ -158,7 +155,6 @@
                 </plugin>
 
             </plugins>
-        </pluginManagement>
     </build>
 
 </project>
