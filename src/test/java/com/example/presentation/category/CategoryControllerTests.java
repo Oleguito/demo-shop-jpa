@@ -1,4 +1,4 @@
-package com.example;
+package com.example.presentation.category;
 import com.example.domain.entity.Category;
 import com.example.presentation.category.CategoryController;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;

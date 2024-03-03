@@ -1,4 +1,4 @@
-package com.example;
+package com.example.domain.entity;
 
 import com.example.ShopApplication;
 import com.example.domain.entity.Purchase;

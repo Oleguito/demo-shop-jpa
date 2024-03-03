@@ -1,4 +1,4 @@
-package com.example;
+package com.example.application.services.category;
 
 import com.example.application.services.category.CategoryService;
 import com.example.domain.entity.Category;

@@ -1,5 +1,6 @@
-package com.example;
+package com.example.presentation.product;
 
+import com.example.ShopApplication;
 import com.example.presentation.product.ProductController;
 import com.example.presentation.product.dto.command.CreateProductCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;

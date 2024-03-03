@@ -1,5 +1,6 @@
-package com.example;
+package com.example.domain.entity;
 
+import com.example.ShopApplication;
 import com.example.domain.entity.Category;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,5 +1,6 @@
-package com.example;
+package com.example.presentation.purchase;
 
+import com.example.ShopApplication;
 import com.example.application.services.user.mapper.UserMapper;
 import com.example.domain.entity.Purchase;
 import com.example.presentation.purchase.PurchaseController;

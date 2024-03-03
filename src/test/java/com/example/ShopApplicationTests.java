@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.ShopApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

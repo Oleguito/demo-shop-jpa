@@ -1,5 +1,6 @@
-package com.example;
+package com.example.presentation.user;
 
+import com.example.ShopApplication;
 import com.example.infrastructure.settings.Settings;
 import com.example.domain.entity.Category;
 import com.example.domain.entity.Product;
