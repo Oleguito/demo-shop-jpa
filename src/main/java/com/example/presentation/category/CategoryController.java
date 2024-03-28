@@ -21,6 +21,7 @@ import static com.example.infrastructure.settings.Settings.*;
 @RestController
 @RequestMapping("/categories")
 @AllArgsConstructor
+@CrossOrigin(origins="*")
 public class CategoryController {
     
     private final CategoryService categoryService;
