@@ -30,6 +30,7 @@ import static com.example.infrastructure.settings.Settings.*;
 @RequestMapping(value = USERS_MAPPING)
 @Slf4j
 @Validated
+@CrossOrigin(origins="*")
 public class UserController {
     
     private UserService userService;
@@ -99,12 +100,10 @@ public class UserController {
     @PostMapping("/{userId}" + PRODUCT_BIN + ADD)
     public ProductBinQuery putAnItemInAProductBin(
             @PathVariable Long userId,
-            @RequestBody CreateProductCommand productCommand
+            @RequestBody Product product
     ) {
-        Product fromCommand
-                = productMapper.fromCommand(productCommand);
         final var newBin
-                = userService.putItemInAProductBinForUserWith(userId, fromCommand);
+                = userService.putItemInAProductBinForUserWith(userId, product);
         ProductBinQuery query = productBinMapper.toQuery(newBin);
         return query;
     }

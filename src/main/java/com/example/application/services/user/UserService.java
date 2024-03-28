@@ -20,7 +20,8 @@ public class UserService {
     private final UserRepository userRepository;
     
     public User addUser(User user) {
-        return userRepository.save(user);
+        final var addedUser = userRepository.save(user);
+        return addedUser;
     }
     
     public List <User> findAll() {

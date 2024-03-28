@@ -12,4 +12,8 @@ public class UpdateUserCommand {
     
     String login;
     
+    String password;
+    
+    String email;
+    
 }

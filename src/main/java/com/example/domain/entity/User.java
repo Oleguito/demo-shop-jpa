@@ -1,5 +1,6 @@
 package com.example.domain.entity;
 
+import com.example.domain.enums.AccountType;
 import com.example.domain.valueobject.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -26,6 +27,12 @@ public class User {
     @NotNull
     @NotEmpty
     String login;
+    
+    String password;
+    
+    String email;
+    
+    AccountType accountType;
     
     @OneToOne(cascade = CascadeType.PERSIST)
     private final ProductBin productBin = new ProductBin();

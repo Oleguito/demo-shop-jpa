@@ -71,6 +71,8 @@ public class TestUtils {
     public static CreateUserCommand getCreateUserCommand(String login) {
         var user = CreateUserCommand.builder()
                 .login(login)
+                .email("oleguito@example.com")
+                .password("123")
                 .build();
         return user;
     }
@@ -86,10 +88,11 @@ public class TestUtils {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return userFromPostResult(
+        final var createdUserFromPostResult = userFromPostResult(
                 postSomething(usersMockMvc, body, USERS_MAPPING + ADD),
                 jackson
         );
+        return createdUserFromPostResult;
     }
     
 }

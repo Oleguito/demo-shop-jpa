@@ -13,9 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateProductCommand {
-    
-    Long id;
-    
+
     String title;
     
     Category category;

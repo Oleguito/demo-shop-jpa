@@ -185,19 +185,20 @@ public class UserControllerTests {
         Product product = createAProduct("bread", category.getId());
         addProductToProductBinOfUser(product, user);
         
+        UserQuery modifiedUser = userController.getUserById(user.getId()).getBody();
         
         removeProductFromProductBinOfAUser(product.getId(),
-                                            user.getId()).andExpectAll(
+                                            modifiedUser.getId()).andExpectAll(
                 status().isOk()
         );
         
         mockMvc.perform(get(getPathToListProductsInAUsersProductBin(
-                user.getId()
+                modifiedUser.getId()
         ))).andExpectAll(
                 status().isOk()
         );
         
-        mockMvc.perform(get(getPathToListProductsInAUsersProductBin(user.getId())))
+        mockMvc.perform(get(getPathToListProductsInAUsersProductBin(modifiedUser.getId())))
                 .andExpectAll(
                         status().isOk()
                 );
@@ -230,15 +231,15 @@ public class UserControllerTests {
     
     Product createAProduct(String title, Long categoryId) {
         
-        final var newProductCommand
+        final var newProduct
                 = CreateProductCommand.builder()
                 .title(title)
                 .category(getCategoryFromId(categoryId))
                 .build();
         
-        return productController.getMapper().toProduct(
-               productController.createProductREST(newProductCommand)
-        );
+        final var createdNewProduct = productController.createProductREST(newProduct);
+        
+        return productController.getMapper().toProduct(createdNewProduct);
     }
     
     private Category getCategoryFromId(Long categoryId) {
@@ -259,7 +260,7 @@ public class UserControllerTests {
 
         final var productBinQuery
                 = userController.putAnItemInAProductBin(postedUser.getId(),
-                productController.getMapper().toCommand(product)
+                product
         );
         
     }
