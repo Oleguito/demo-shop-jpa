@@ -29,7 +29,7 @@ import static com.example.infrastructure.settings.Settings.*;
 @AllArgsConstructor
 @RequestMapping(value = USERS_MAPPING)
 @Slf4j
-@Validated
+// @Validated
 @CrossOrigin(origins="*")
 public class UserController {
     
@@ -55,7 +55,7 @@ public class UserController {
     }
     
     @PostMapping("/add")
-    public UserQuery postAUser(@RequestBody @Valid CreateUserCommand userCommand) {
+    public UserQuery postAUser(@RequestBody CreateUserCommand userCommand) {
         User fromCommand = userMapper.toUser(userCommand);
         User user = userService.addUser(fromCommand);
         UserQuery userQuery = userMapper.toUserQuery(user);

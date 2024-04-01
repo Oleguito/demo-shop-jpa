@@ -27,7 +27,7 @@ public class UserQuery {
     
     AccountType accountType;
     
-    private ProductBin productBin;
+    ProductBin productBin;
     
-    private List <Purchase> purchases;
+    List <Purchase> purchases;
 }
