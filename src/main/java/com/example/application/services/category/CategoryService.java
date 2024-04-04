@@ -80,6 +80,8 @@ public class CategoryService {
         // }
         //
         
+        categoryRepository.findById(id).orElseThrow();
+
         Category one = categoryMapper.toCategory(newCategory);
         one.setId(id);
         
