@@ -13,7 +13,6 @@ import static com.example.infrastructure.settings.Settings.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping(PURCHASES_MAPPING)
-@CrossOrigin(origins="*")
 public class PurchaseController {
 
     private PurchaseService purchaseService;

@@ -5,6 +5,7 @@ import com.example.application.services.category.mapper.CategoryMapper;
 import com.example.application.services.product.mapper.ProductMapper;
 import com.example.domain.entity.Category;
 import com.example.presentation.category.dto.commands.CreateCategoryCommand;
+import com.example.presentation.category.dto.commands.ModifyCategoryCommand;
 import com.example.presentation.category.dto.queries.CategoryQuery;
 import com.example.presentation.product.ProductController;
 import com.example.presentation.product.dto.command.CreateProductCommand;
@@ -19,9 +20,9 @@ import java.util.stream.Collectors;
 import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping(value="/categories", method={RequestMethod.PUT})
 @AllArgsConstructor
-@CrossOrigin(origins="*")
+@CrossOrigin
 public class CategoryController {
     
     private final CategoryService categoryService;
@@ -57,11 +58,28 @@ public class CategoryController {
                 productCommand.getCategory().getTitle());
         return productController.createProductREST(productCommand);
     }
-
+    
+    @PutMapping
+    @RequestMapping(value="/modify/{id}", method={RequestMethod.PUT})
+    @CrossOrigin
+    public CategoryQuery modifyCategoryById(@PathVariable Long id,
+                                            @RequestBody ModifyCategoryCommand modifyCategoryCommand) {
+        
+        return categoryMapper.categoryToQuery(
+                categoryService.modifyCategoryById(id, modifyCategoryCommand)
+        );
+    }
+    
     @DeleteMapping(DELETE_CATEGORY + "/{" + CATEGORY_TITLE_VAR + "}")
     public void deleteCategoryByTitle(@PathVariable String categoryTitle) {
         categoryService.removeCategory(
                 categoryService.findByTitle(categoryTitle));
+    }
+    
+    @RequestMapping(value="/{id}", method={RequestMethod.DELETE})
+    @CrossOrigin
+    public void deleteCategoryById(@PathVariable Long id) {
+        categoryService.removeCategoryById(id);
     }
     
     @GetMapping("/{categoryId}")

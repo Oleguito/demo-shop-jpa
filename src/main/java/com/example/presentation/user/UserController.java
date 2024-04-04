@@ -30,7 +30,7 @@ import static com.example.infrastructure.settings.Settings.*;
 @RequestMapping(value = USERS_MAPPING)
 @Slf4j
 // @Validated
-@CrossOrigin(origins="*")
+@CrossOrigin
 public class UserController {
     
     private UserService userService;

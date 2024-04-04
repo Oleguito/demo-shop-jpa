@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class Config {
+ public class Config {
     
     @Bean
     public ModelMapper modelMapper() {
@@ -27,8 +29,18 @@ public class Config {
     @Bean
     public ObjectMapper jackson() {return new ObjectMapper(); }
     
-    // @Bean
-    // public LocalValidatorFactoryBean validator() {
-    //     return new LocalValidatorFactoryBean();
+    // @Override
+    // public void addCorsMappings(CorsRegistry registry) {
+    //     registry.addMapping("/*") // Разрешить CORS запросы к любым URL
+    //             .allowedOrigins("http://localhost:3000") // URL вашего клиентского приложения
+    //             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Разрешенные методы
+    //             .allowedHeaders("") // Разрешить все заголовки
+    //             .allowCredentials(true) // Разрешить отправку cookies
+    //             .maxAge(3600); // Максимальное время, на которое результат предварительного запроса может быть кэширован
+    // }
+    
+    // @Override
+    // public void addCorsMappings(CorsRegistry registry) {
+    //     registry.addMapping("/**").allowedMethods("*");
     // }
 }

@@ -13,9 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping(value = "/products", method = { RequestMethod.PUT, RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE })
 @AllArgsConstructor
-@CrossOrigin(origins="*")
 public class ProductController {
 
     private ProductService productService;
@@ -32,8 +31,8 @@ public class ProductController {
         ).collect(Collectors.toList());
     }
     
-    
     @PostMapping("/add")
+    @CrossOrigin
     public ProductQuery createProductREST(@RequestBody CreateProductCommand productCommand) {
         Product productFromCommand =
                 modelMapper.map(productCommand, Product.class);
