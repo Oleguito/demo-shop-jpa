@@ -45,7 +45,7 @@ public class UserService {
             if(field.getName().equals("id")) continue;
             trySet(newUser, field, user);
         }
-        return user;
+        return userRepository.save(user);
     }
     
     private static void trySet(User newUser, Field field, User user) {

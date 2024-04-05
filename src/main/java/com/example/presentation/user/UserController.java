@@ -62,7 +62,8 @@ public class UserController {
         return userQuery;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @RequestMapping(value="/delete/{id}", method = {RequestMethod.DELETE})
+    @CrossOrigin
     public void deleteAUser(@PathVariable Long id) {
         Optional <User> found = userService.getUserById(id);
         if(found.isEmpty()) return;
@@ -70,7 +71,8 @@ public class UserController {
         userService.deleteUser(user);
     }
     
-    @PutMapping("/{id}")
+    @RequestMapping(value="/{id}", method = {RequestMethod.PUT})
+    @CrossOrigin
     public UserQuery updateAUser(@PathVariable Long id, @RequestBody UpdateUserCommand updateUserCommand) {
         User updated = userService.updateUser(id,
                 userMapper.toUser(updateUserCommand));
