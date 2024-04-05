@@ -24,6 +24,7 @@ public class ProductController {
     private ProductMapper productMapper;
     
     @GetMapping("/all")
+    @CrossOrigin
     public List <ProductQuery> getAllProductsREST() {
         return productService.findAll().stream().map(
                 product ->

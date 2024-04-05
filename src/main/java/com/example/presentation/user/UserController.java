@@ -99,7 +99,9 @@ public class UserController {
         );
     }
     
-    @PostMapping("/{userId}" + PRODUCT_BIN + ADD)
+    // @PostMapping("/{userId}" + PRODUCT_BIN + ADD)
+    @RequestMapping(value=("/{userId}" + PRODUCT_BIN + ADD), method = {RequestMethod.POST})
+    @CrossOrigin
     public ProductBinQuery putAnItemInAProductBin(
             @PathVariable Long userId,
             @RequestBody Product product

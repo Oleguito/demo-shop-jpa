@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
-@RequestMapping(value="/categories", method={RequestMethod.PUT})
+@RequestMapping(value="/categories", method={RequestMethod.PUT, RequestMethod.GET})
 @AllArgsConstructor
 @CrossOrigin
 public class CategoryController {
