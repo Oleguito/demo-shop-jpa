@@ -38,6 +38,7 @@ public class ProductController {
         Product productFromCommand =
                 modelMapper.map(productCommand, Product.class);
         Product product = productService.create(productFromCommand);
+        
         return modelMapper.map(product, ProductQuery.class);
     }
     
