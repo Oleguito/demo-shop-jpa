@@ -53,7 +53,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler({Exception.class})
     @ResponseBody
     public ApiError handleException(Exception exception) {
-        log.error("exception caught by advice BLAH {} ", exception.getClass().getName());
+        log.error(exception.getMessage());
         return wrapSystemException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

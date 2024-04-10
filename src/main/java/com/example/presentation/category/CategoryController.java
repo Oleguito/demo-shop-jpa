@@ -76,13 +76,14 @@ public class CategoryController {
                 categoryService.findByTitle(categoryTitle));
     }
     
-    @RequestMapping(value="/{id}", method={RequestMethod.DELETE})
+    @RequestMapping(value="/delete/{id}", method={RequestMethod.DELETE})
     @CrossOrigin
     public void deleteCategoryById(@PathVariable Long id) {
         categoryService.removeCategoryById(id);
     }
     
-    @GetMapping("/{categoryId}")
+    @RequestMapping(value="/{categoryId}", method = {RequestMethod.GET})
+    @CrossOrigin
     public CategoryQuery findCategoryById(@PathVariable Long categoryId) {
         Category category = categoryService.findById(categoryId);
         return categoryMapper.categoryToQuery(category);

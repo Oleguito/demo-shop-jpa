@@ -4,6 +4,7 @@ import com.example.application.services.product.ProductService;
 import com.example.application.services.product.mapper.ProductMapper;
 import com.example.domain.entity.Product;
 import com.example.presentation.product.dto.command.CreateProductCommand;
+import com.example.presentation.product.dto.command.UpdateProductCommand;
 import com.example.presentation.product.dto.query.ProductQuery;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,7 +33,7 @@ public class ProductController {
         ).collect(Collectors.toList());
     }
     
-    @PostMapping("/add")
+    @RequestMapping(value="/add", method={RequestMethod.POST})
     @CrossOrigin
     public ProductQuery createProductREST(@RequestBody CreateProductCommand productCommand) {
         Product productFromCommand =
@@ -40,6 +41,20 @@ public class ProductController {
         Product product = productService.create(productFromCommand);
         
         return modelMapper.map(product, ProductQuery.class);
+    }
+    
+    @RequestMapping(value="/delete/{id}", method={RequestMethod.DELETE})
+    @CrossOrigin
+    public void deleteProductById(@PathVariable Long id) {
+        productService.deleteById(id);
+    }
+    
+    @RequestMapping(value="/update/{id}", method={RequestMethod.PUT})
+    @CrossOrigin
+    public ProductQuery modifyProductById(@PathVariable Long id, @RequestBody UpdateProductCommand updater) {
+        
+        Product product = productService.modifyById(id, updater);
+        return productMapper.toQuery(product);
     }
     
     public ProductMapper getMapper() {
