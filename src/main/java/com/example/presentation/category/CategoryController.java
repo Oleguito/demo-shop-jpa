@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static com.example.infrastructure.settings.Settings.*;
 
 @RestController
-@RequestMapping(value="/categories", method={RequestMethod.PUT, RequestMethod.GET})
+@RequestMapping(value="/categories")
 @AllArgsConstructor
 @CrossOrigin
 public class CategoryController {
@@ -70,14 +70,14 @@ public class CategoryController {
         );
     }
     
-    @DeleteMapping(DELETE_CATEGORY + "/{" + CATEGORY_TITLE_VAR + "}")
-    public void deleteCategoryByTitle(@PathVariable String categoryTitle) {
-        categoryService.removeCategory(
-                categoryService.findByTitle(categoryTitle));
-    }
+    // @RequestMapping(value=DELETE_CATEGORY + "/{" + CATEGORY_TITLE_VAR + "}", method={RequestMethod.DELETE})
+    // public void deleteCategoryByTitle(@PathVariable String categoryTitle) {
+    //     categoryService.removeCategory(
+    //             categoryService.findByTitle(categoryTitle));
+    // }
     
     @RequestMapping(value="/delete/{id}", method={RequestMethod.DELETE})
-    @CrossOrigin
+    @CrossOrigin(methods = {RequestMethod.DELETE})
     public void deleteCategoryById(@PathVariable Long id) {
         categoryService.removeCategoryById(id);
     }

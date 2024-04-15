@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: oleguitoSwagbucks
+      changes:
+        - sqlFile:
+            path: liquibase/changelog/2024/04/15/create_categories.sql
